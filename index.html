@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Feihong Yu — media artist and interaction designer working with sound, light and the body.">
+<title>Feihong Yu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: full-bleed fitted wordmark on top (after jarcos) → sticky bio column left + grid of small "window" works right (after joshuabaker) → FIG.-numbered technical-plate labels (after karolortyl). */
+:root{
+  --paper:#E2E4EA;      /* cool chalk grey, faint blue bias */
+  --win:#EEF0F4;        /* window surface */
+  --ink:#14173A;        /* deep navy ink */
+  --mute:#5E6382;
+  --line:rgba(20,23,58,.22);
+  --ultra:#2A2EDB;      /* ultramarine — the one bold move */
+  --rose:#E48FA8;       /* used only inside the generative plates */
+  --amber:#E9A93A;
+  --f-display:"Archivo","Helvetica Neue",Arial,"PingFang SC","Noto Sans SC",sans-serif;
+  --f-body:"Archivo","Helvetica Neue",Arial,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,"PingFang SC",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0C0E22;--win:#14173A;--ink:#E3E5F0;--mute:#9095B4;--line:rgba(227,229,240,.2);
+  --ultra:#8288FF;--rose:#E58BA5;--amber:#E9B24E;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0C0E22;--win:#14173A;--ink:#E3E5F0;--mute:#9095B4;--line:rgba(227,229,240,.2);
+  --ultra:#8288FF;--rose:#E58BA5;--amber:#E9B24E;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1440px;margin:0 auto;padding-block:20px 40px}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ultra);outline-offset:3px}
+
+/* language */
+body:not(.zh) .zh{display:none!important}
+body.zh .en{display:none!important}
+
+.mono{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+
+/* top bar */
+.bar{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px}
+.bar nav{display:flex;gap:22px}
+.bar nav a{text-decoration:none}
+.bar nav a:hover{color:var(--ultra)}
+.bar .right{display:flex;gap:20px;align-items:baseline}
+.lang{display:flex;border:1px solid var(--ink)}
+.lang button{background:none;border:0;padding:3px 9px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.clock{font-variant-numeric:tabular-nums;color:var(--mute)}
+
+/* wordmark */
+.mark{padding-block:18px 8px;color:var(--ultra)}
+.mark .ln{display:block;white-space:nowrap;font-family:var(--f-display);font-weight:800;font-stretch:125%;
+  line-height:.86;letter-spacing:-.035em;font-size:clamp(48px,14vw,220px)}
+.mark .ln2{font-weight:300;font-stretch:112%;letter-spacing:-.03em}
+.mark .slash{font-weight:200}
+.strip{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding-block:8px;margin-top:14px}
+.strip span{color:var(--mute)}
+.strip b{font-weight:500;color:var(--ink)}
+
+/* main */
+main{display:grid;grid-template-columns:minmax(260px,4fr) 9fr;gap:48px;margin-top:40px;align-items:start}
+aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);min-width:0;display:grid;gap:28px}
+.lede{font-size:21px;line-height:1.35;letter-spacing:-.01em;text-wrap:balance;max-width:30ch}
+body.zh .lede{letter-spacing:0;line-height:1.55}
+.bio p{margin:0 0 .8em;max-width:62ch;color:var(--ink)}
+.facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.facts div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding-block:9px;border-bottom:1px solid var(--line)}
+.facts dt{color:var(--mute);margin:0}
+.facts dd{margin:0;min-width:0}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px}
+.links a{text-decoration:none;border-bottom:1px solid var(--ultra)}
+.links a:hover{color:var(--ultra)}
+
+/* works grid */
+.works{min-width:0}
+.works h2{margin:0 0 14px;display:flex;justify-content:space-between;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}
+.card{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
+.window{background:var(--win);border:1px solid var(--ink);transition:transform .25s ease,box-shadow .25s ease}
+.card:hover .window,.card:focus-visible .window{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ultra)}
+.tbar{display:flex;align-items:center;gap:10px;padding:6px 10px;border-bottom:1px solid var(--ink)}
+.tbar .sq{display:flex;gap:4px}
+.tbar .sq i{width:8px;height:8px;border:1px solid var(--ink);display:block}
+.card:hover .tbar .sq i:first-child{background:var(--ultra);border-color:var(--ultra)}
+.tbar .fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:.02em}
+.plate{position:relative;aspect-ratio:4/3;max-width:100%}
+.plate canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.plate .play{position:absolute;right:10px;bottom:10px;background:var(--ink);color:var(--paper);padding:3px 8px}
+.cap{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;padding-top:10px}
+.cap .fig{color:var(--ultra)}
+.cap .t{font-weight:600;font-size:16px;letter-spacing:-.005em}
+.cap .y{color:var(--mute)}
+.card .sub{margin-top:2px;color:var(--mute);font-size:13.5px;padding-left:0}
+
+footer{margin-top:72px;border-top:1px solid var(--ink);padding-top:12px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+footer span{color:var(--mute)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(6px);
+  display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px))}
+.lb .window{width:min(1080px,100%);max-height:100%;overflow:auto;box-shadow:10px 10px 0 var(--ultra)}
+.lb .tbar button{background:none;border:1px solid var(--ink);cursor:pointer;padding:1px 8px}
+.lb .body{display:grid;grid-template-columns:3fr 2fr;gap:0}
+.lb .media{position:relative;background:var(--ink);aspect-ratio:16/10;max-width:100%;min-width:0}
+.lb .media video,.lb .media iframe,.lb .media canvas{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
+.lb .media canvas{background:var(--win)}
+.lb .media .note{position:absolute;left:12px;bottom:12px;right:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lb .media .note span{background:var(--paper);padding:3px 8px}
+.lb .media .note a{background:var(--ultra);color:#fff;padding:3px 8px;text-decoration:none}
+.lb .info{padding:22px;display:grid;gap:16px;align-content:start;min-width:0;border-left:1px solid var(--ink)}
+.lb h3{margin:0;font-family:var(--f-display);font-stretch:110%;font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.lb .info p{margin:0;max-width:60ch}
+
+@media (max-width:900px){
+  main{grid-template-columns:1fr;gap:40px}
+  aside{position:static}
+  .lb .body{grid-template-columns:1fr}
+  .lb .info{border-left:0;border-top:1px solid var(--ink)}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .bar nav{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="bar">
+    <nav class="mono" aria-label="Sections">
+      <a href="#work"><span class="en">Work</span><span class="zh">作品</span></a>
+      <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
+      <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
+    </nav>
+    <div class="right mono">
+      <span class="clock" id="clock">Indiana, US</span>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="lang-en" type="button" aria-pressed="true">EN</button>
+        <button id="lang-zh" type="button" aria-pressed="false">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <h1 class="mark" aria-label="Feihong Yu">
+    <span class="ln fit" aria-hidden="true">Feihong Yu</span>
+  </h1>
+  <div class="strip mono">
+    <span><b>FIG. 1–4</b> <span class="en">Selected works</span><span class="zh">作品精选</span></span>
+    <span class="en">Sound · Light · Body · Interaction</span><span class="zh">声音 · 光 · 身体 · 交互</span>
+    <span>2024 — 26</span>
+  </div>
+
+  <main>
+    <aside id="about">
+      <p class="lede">
+        <span class="en">Media artist and interaction designer building rooms, objects and stages that listen back.</span>
+        <span class="zh">媒体艺术家与交互设计师，创作会“回应”观众的空间、物件与舞台。</span>
+      </p>
+      <div class="bio">
+        <p class="en">I'm Feihong Yu. I work where sound, light and the body meet: interactive installations, real-time visuals for performance, and small electronic objects you can hold. My projects move between Arduino and ESP32 hardware, Max and SuperCollider patches, and Unreal Engine scenes.</p>
+        <p class="en">I'm currently part of the KIX Lab community at Indiana University, collaborating with composers, psychologists and filmmakers.</p>
+        <p class="zh">我是喻飞鸿（Feihong Yu）。我的创作位于声音、光与身体的交汇处：互动装置、为表演设计的实时影像，以及可以握在手中的小型电子物件。我的项目在 Arduino 与 ESP32 硬件、Max 与 SuperCollider 程序、以及 Unreal Engine 场景之间穿梭。</p>
+        <p class="zh">目前我在印第安纳大学 KIX Lab 的创作社群中，与作曲家、心理学研究者和电影人合作。</p>
+      </div>
+      <dl class="facts mono">
+        <div><dt><span class="en">Practice</span><span class="zh">领域</span></dt><dd><span class="en">Installation, visuals, motion capture</span><span class="zh">装置、影像、动作捕捉</span></dd></div>
+        <div><dt><span class="en">Tools</span><span class="zh">工具</span></dt><dd>Unreal · Max · SuperCollider · Arduino · ESP32 · Fusion</dd></div>
+        <div><dt><span class="en">Based</span><span class="zh">所在</span></dt><dd><span class="en">Indiana, US</span><span class="zh">美国印第安纳</span></dd></div>
+      </dl>
+      <div id="contact" class="links mono">
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube ↗</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+        <span style="color:var(--mute)"><span class="en">Email — add yours</span><span class="zh">邮箱 — 待填写</span></span>
+      </div>
+    </aside>
+
+    <section class="works" id="work" aria-label="Works">
+      <h2 class="mono"><span><span class="en">Index of works</span><span class="zh">作品目录</span></span><span id="count"></span></h2>
+      <div class="grid" id="grid"></div>
+    </section>
+  </main>
+
+  <footer class="mono">
+    <span>© 2026 Feihong Yu</span>
+    <span class="en">Click any window to open the work.</span><span class="zh">点击任意窗口查看作品。</span>
+  </footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
+  <div class="window">
+    <div class="tbar mono"><span class="sq"><i></i><i></i><i></i></span><span class="fn" id="lb-fn"></span><button type="button" id="lb-close" class="mono">✕ <span class="en">Close</span><span class="zh">关闭</span></button></div>
+    <div class="body">
+      <div class="media" id="lb-media"></div>
+      <div class="info">
+        <div class="mono" id="lb-fig" style="color:var(--ultra)"></div>
+        <h3 id="lb-title"></h3>
+        <dl class="facts mono" id="lb-facts"></dl>
+        <p id="lb-desc"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   EDIT YOUR WORKS HERE
+   - video:   path or URL of an .mp4/.webm you upload → plays inside the page
+   - youtube: the video ID (the part after watch?v=)
+   - art:     generative cover used until you add an image ("shadow" | "eeg" | "weather" | "gourd")
+   - cover:   optional image path/URL; replaces the generative cover
+   ============================================================ */
+const SITE = {
+  // YouTube players can't load inside a Claude artifact. Set to true when you host this page on your own domain.
+  embedYouTube: true
+};
+const WORKS = [
+  {
+    id:"kirillov", file:"kirillov_mini-opera.mov", art:"shadow", year:"2026",
+    video:"", youtube:"", cover:"",
+    title:{en:"Kirillov — A Virtual Mini-Opera", zh:"《基里洛夫》虚拟迷你歌剧"},
+    sub:{en:"Solo voice, spatial sound, real-time visuals", zh:"独唱、空间声音与实时影像"},
+    role:{en:"Visual design, motion capture, sound–visual interaction", zh:"视觉设计、动作捕捉、声音与影像交互"},
+    tools:"Unreal Engine · Mocap · Spatial audio",
+    status:{en:"In development", zh:"创作中"},
+    desc:{en:"A chamber opera built around Kirillov from Dostoevsky's Demons. I'm building its visual world and a motion-captured shadow that answers the singer's body. Planned in two versions: an AR film and a live concert.",
+          zh:"一部围绕陀思妥耶夫斯基《群魔》中基里洛夫展开的室内歌剧。我负责构建它的视觉世界，以及一个由动作捕捉驱动、回应歌者身体的“影子”。计划制作两个版本：AR 影片版与现场音乐会版。"}
+  },
+  {
+    id:"eeg", file:"eeg_spatial_sound.wav", art:"eeg", year:"2026",
+    video:"", youtube:"", cover:"",
+    title:{en:"Brainwave Room", zh:"脑波房间"},
+    sub:{en:"EEG-driven spatial sound installation", zh:"脑电驱动的空间声音装置"},
+    role:{en:"Concept, visual & interaction design (team)", zh:"概念、视觉与交互设计（团队项目）"},
+    tools:"EEG headband · Motion tracking · Spatial audio",
+    status:{en:"Proposal — IU KIX Lab seed grant", zh:"提案中 — IU KIX Lab 种子基金"},
+    desc:{en:"An installation that turns brain and body responses into electronic sound moving around the listener. The team composes every sound itself; EEG readings and motion tracking decide where and how it travels.",
+          zh:"一件将大脑与身体的反应转化为环绕听者流动的电子声音的装置。所有声音由团队原创；脑电数据与动作追踪决定声音在空间中的位置与移动方式。"}
+  },
+  {
+    id:"weather", file:"touch_weather.mp4", art:"weather", year:"2026",
+    video:"", youtube:"", cover:"",
+    title:{en:"Weather You Can Touch", zh:"摸得到的天气"},
+    sub:{en:"Touch installation for a children's science lab", zh:"儿童科学实验室互动装置"},
+    role:{en:"Design, fabrication, programming", zh:"设计、制作、编程"},
+    tools:"Arduino · Max / SuperCollider · 3D print · Copper foil",
+    status:{en:"Science lab installation", zh:"科学实验室展出"},
+    desc:{en:"Six-year-olds touch 3D-printed weather symbols wrapped in copper foil. A small light box blends the colors of every symbol being held, so sun plus rain makes a new color in the room.",
+          zh:"六岁左右的孩子触摸包裹铜箔的 3D 打印天气符号，小灯箱会把正在被触摸的符号颜色混合在一起——太阳加上雨，房间里就出现了新的颜色。"}
+  },
+  {
+    id:"gourd", file:"gourd_v25.f3d", art:"gourd", year:"2026",
+    video:"", youtube:"", cover:"",
+    title:{en:"Gourd", zh:"葫芦"},
+    sub:{en:"A light object with a sensor inside", zh:"内置传感器的发光物件"},
+    role:{en:"Industrial design, electronics", zh:"产品造型、电子"},
+    tools:"Autodesk Fusion · ESP32 Feather · LED strip",
+    status:{en:"Prototype, version 25", zh:"原型，第 25 版"},
+    desc:{en:"A 3D-printed gourd that holds an ESP32 sensor board and answers with light. After 24 versions in Fusion, the current one simplifies the shell and wraps the LED strip around the outside.",
+          zh:"一个 3D 打印的葫芦，内部装有 ESP32 传感器板，并以光作出回应。在 Fusion 中迭代了 24 个版本后，当前版本简化了外壳，把 LED 灯带改到外侧环绕。"}
+  }
+];
+
+/* ---------- language ---------- */
+let lang = "en";
+try{ const s = localStorage.getItem("fy-lang"); if(s==="zh"||s==="en") lang = s; }catch(e){}
+const bEn = document.getElementById("lang-en"), bZh = document.getElementById("lang-zh");
+function setLang(l){
+  lang = l; document.body.classList.toggle("zh", l==="zh");
+  document.documentElement.lang = l==="zh" ? "zh-CN" : "en";
+  bEn.setAttribute("aria-pressed", l==="en"); bZh.setAttribute("aria-pressed", l==="zh");
+  try{ localStorage.setItem("fy-lang", l); }catch(e){}
+}
+bEn.onclick = ()=>setLang("en"); bZh.onclick = ()=>setLang("zh");
+setLang(lang);
+
+/* ---------- clock ---------- */
+const clockEl = document.getElementById("clock");
+function tick(){
+  try{
+    const t = new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"America/Indiana/Indianapolis"}).format(new Date());
+    clockEl.textContent = "Indiana " + t;
+  }catch(e){}
+}
+tick(); setInterval(tick, 20000);
+
+/* ---------- fit wordmark to width ---------- */
+function fit(){
+  const host = document.querySelector(".mark");
+  const W = host.clientWidth;
+  document.querySelectorAll(".fit").forEach(el=>{
+    el.style.fontSize = "100px"; el.style.display = "inline-block";
+    const w = el.scrollWidth; el.style.display = "";
+    if(w) el.style.fontSize = Math.min(100 * W / w * 0.995, 340) + "px";
+  });
+}
+fit();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+new ResizeObserver(fit).observe(document.querySelector(".mark"));
+
+/* ---------- generative plates ---------- */
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function draw(cv, kind, t){
+  const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2);
+  const W = Math.max(1, r.width), H = Math.max(1, r.height);
+  if(cv.width !== Math.round(W*dpr)){ cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); }
+  const c = cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0);
+  const ink=css("--ink"), ultra=css("--ultra"), rose=css("--rose"), amber=css("--amber"), win=css("--win"), line=css("--line");
+  c.fillStyle = win; c.fillRect(0,0,W,H);
+  // registration grid
+  c.strokeStyle = line; c.lineWidth = 1;
+  for(let x=W/8; x<W; x+=W/8){ c.beginPath(); c.moveTo(x,0); c.lineTo(x,H); c.stroke(); }
+  for(let y=H/6; y<H; y+=H/6){ c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke(); }
+  const cx=W/2, cy=H/2;
+  if(kind==="shadow"){
+    c.fillStyle = ultra; c.globalAlpha=.85;
+    const sx = Math.sin(t*1.3)*W*.04;
+    // shadow — stretched, offset
+    c.save(); c.translate(cx+W*.12+sx, cy+H*.02); c.transform(1,0,-.5,1,0,0); figure(c,H*.62,ultra); c.restore();
+    c.globalAlpha=1; c.save(); c.translate(cx-W*.1, cy); figure(c,H*.6,ink); c.restore();
+    c.strokeStyle=ink; c.beginPath(); c.moveTo(W*.06,cy+H*.3); c.lineTo(W*.94,cy+H*.3); c.stroke();
+  }
+  if(kind==="eeg"){
+    for(let k=0;k<5;k++){ c.strokeStyle = k===2?ultra:ink; c.globalAlpha = k===2?1:.55; c.lineWidth = k===2?2:1;
+      c.beginPath(); c.arc(cx,cy,H*(.08+k*.085),0,Math.PI*2); c.stroke(); }
+    c.globalAlpha=1;
+    for(let b=0;b<4;b++){
+      const y0 = H*(.2+b*.2), f=[.03,.06,.11,.18][b], a=[10,7,5,3][b];
+      c.strokeStyle = b===1?rose:ink; c.lineWidth = b===1?2:1.2; c.beginPath();
+      for(let x=0;x<=W;x+=2){ const y=y0+Math.sin(x*f+t*(1+b))*a+Math.sin(x*f*2.7+t*2)*a*.4; x?c.lineTo(x,y):c.moveTo(x,y); }
+      c.stroke();
+    }
+  }
+  if(kind==="weather"){
+    c.globalCompositeOperation = "multiply";
+    const R=H*.26, o=Math.sin(t)*R*.15;
+    c.fillStyle=amber; c.beginPath(); c.arc(cx-R*.55-o,cy-R*.25,R,0,7); c.fill();
+    c.fillStyle=ultra; c.globalAlpha=.75; c.beginPath(); c.arc(cx+R*.55+o,cy-R*.25,R,0,7); c.fill();
+    c.fillStyle=rose; c.globalAlpha=.8; c.beginPath(); c.arc(cx,cy+R*.5,R,0,7); c.fill();
+    c.globalAlpha=1; c.globalCompositeOperation="source-over";
+    c.strokeStyle=ink; c.lineWidth=1.4;
+    for(let i=0;i<9;i++){ const x=W*.12+i*W*.035, y=H*.72+((t*30+i*13)%30); c.beginPath(); c.moveTo(x,y); c.lineTo(x-4,y+10); c.stroke(); }
+  }
+  if(kind==="gourd"){
+    const pts=[]; const s=H*.36;
+    for(let a=0;a<Math.PI*2;a+=.04){
+      const y=Math.sin(a), x=Math.cos(a);
+      const w = (y<0? .55+.25*Math.cos((y+1)*Math.PI) : 1) ; // narrow top bulb
+      const top = y<0 ? s*.9 : s;
+      pts.push([cx + x*s*.62*(y<0?.62:1), cy + y*top*(y<0?1.05:.8) + (y<0?-s*.15:s*.15)]);
+    }
+    for(let k=0;k<6;k++){ c.strokeStyle = k===0?ink:line; c.lineWidth=k===0?1.6:1; c.beginPath();
+      pts.forEach((p,i)=>{ const q=[cx+(p[0]-cx)*(1-k*.12), cy+(p[1]-cy)*(1-k*.12)]; i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]); });
+      c.closePath(); c.stroke(); }
+    pts.forEach((p,i)=>{ if(i%6) return; const on = (Math.sin(i*.3 - t*3)+1)/2;
+      c.fillStyle = on>.6? ultra : ink; c.globalAlpha = .35+on*.65; c.beginPath(); c.arc(p[0],p[1],2.6,0,7); c.fill(); });
+    c.globalAlpha=1; c.strokeStyle=ink; c.beginPath(); c.moveTo(cx,cy-s*1.18); c.lineTo(cx+6,cy-s*1.32); c.stroke();
+  }
+  c.globalAlpha=1;
+}
+function figure(c,h,col){ // simple standing body
+  c.fillStyle=col; c.beginPath(); c.arc(0,-h*.42,h*.07,0,7); c.fill();
+  c.beginPath(); c.moveTo(-h*.09,-h*.32); c.lineTo(h*.09,-h*.32); c.lineTo(h*.13,h*.05); c.lineTo(h*.05,h*.05);
+  c.lineTo(h*.06,h*.3); c.lineTo(-h*.06,h*.3); c.lineTo(-h*.05,h*.05); c.lineTo(-h*.13,h*.05); c.closePath(); c.fill();
+}
+
+/* ---------- render grid ---------- */
+const grid = document.getElementById("grid");
+document.getElementById("count").textContent = String(WORKS.length).padStart(2,"0") + " / " + String(WORKS.length).padStart(2,"0");
+const plates = [];
+const L = o => `<span class="en">${o.en}</span><span class="zh">${o.zh}</span>`;
+WORKS.forEach((w,i)=>{
+  const n = String(i+1).padStart(2,"0");
+  const b = document.createElement("button");
+  b.className="card"; b.type="button"; b.id="work-"+w.id;
+  const playable = w.video || w.youtube;
+  b.innerHTML = `<div class="window">
+      <div class="tbar mono"><span class="sq"><i></i><i></i><i></i></span><span class="fn">${w.file}</span></div>
+      <div class="plate">${w.cover?`<img src="${w.cover}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<canvas></canvas>`}
+        ${playable?`<span class="play mono">▶ ${w.video?"Play":"YouTube"}</span>`:""}</div>
+    </div>
+    <div class="cap mono"><span class="fig">FIG. ${i+1}</span><span class="t" style="font-family:var(--f-body);text-transform:none;letter-spacing:0">${L(w.title)}</span><span class="y">${w.year}</span></div>
+    <div class="sub">${L(w.sub)}</div>`;
+  b.onclick = ()=>openWork(i);
+  grid.appendChild(b);
+  const cv = b.querySelector("canvas");
+  if(cv){ const p={cv,kind:w.art,t:i*.7,live:false}; plates.push(p);
+    b.addEventListener("mouseenter",()=>p.live=true); b.addEventListener("mouseleave",()=>p.live=false);
+    b.addEventListener("focus",()=>p.live=true); b.addEventListener("blur",()=>p.live=false); }
+});
+function loop(){ plates.forEach(p=>{ if(p.live && !reduce) p.t += .025; draw(p.cv,p.kind,p.t); }); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+/* ---------- lightbox ---------- */
+const lb=document.getElementById("lb"), media=document.getElementById("lb-media");
+let lbPlate=null, lastFocus=null;
+function openWork(i){
+  const w = WORKS[i]; lastFocus = document.activeElement;
+  document.getElementById("lb-fn").textContent = w.file;
+  document.getElementById("lb-fig").textContent = "FIG. " + (i+1) + " — " + w.year;
+  document.getElementById("lb-title").innerHTML = L(w.title);
+  document.getElementById("lb-desc").innerHTML = L(w.desc);
+  document.getElementById("lb-facts").innerHTML =
+    `<div><dt>${L({en:"Role",zh:"职责"})}</dt><dd>${L(w.role)}</dd></div>
+     <div><dt>${L({en:"Tools",zh:"工具"})}</dt><dd>${w.tools}</dd></div>
+     <div><dt>${L({en:"Status",zh:"状态"})}</dt><dd>${L(w.status)}</dd></div>`;
+  lbPlate=null;
+  if(w.video){
+    media.innerHTML = `<video src="${w.video}" controls playsinline preload="metadata" ${w.cover?`poster="${w.cover}"`:""}></video>`;
+  }else if(w.youtube && SITE.embedYouTube){
+    media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${w.youtube}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${w.title.en}"></iframe>`;
+  }else{
+    media.innerHTML = `<canvas></canvas><div class="note mono">${
+      w.youtube ? `<a href="https://www.youtube.com/watch?v=${w.youtube}" target="_blank" rel="noopener">▶ ${L({en:"Watch on YouTube",zh:"在 YouTube 观看"})} ↗</a>`
+                : `<span>${L({en:"Video coming soon",zh:"影像即将上传"})}</span>`}</div>`;
+    lbPlate = {cv:media.querySelector("canvas"), kind:w.art, t:0, live:true}; plates.push(lbPlate);
+  }
+  lb.hidden=false; document.getElementById("lb-close").focus();
+}
+function closeLb(){
+  lb.hidden=true; const v=media.querySelector("video"); if(v) v.pause();
+  if(lbPlate){ plates.splice(plates.indexOf(lbPlate),1); lbPlate=null; }
+  media.innerHTML=""; if(lastFocus) lastFocus.focus();
+}
+document.getElementById("lb-close").onclick=closeLb;
+lb.addEventListener("click",e=>{ if(e.target===lb) closeLb(); });
+addEventListener("keydown",e=>{ if(e.key==="Escape" && !lb.hidden) closeLb(); });
+</script>
+
+</body>
+</html>
