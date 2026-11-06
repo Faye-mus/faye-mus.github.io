@@ -258,7 +258,7 @@ setLanguage(language);
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 <script>
-// One shared flow field animates the ink texture and the particle sheet.
+// Ink pigment and particles move over a single folded, translucent surface.
 (() => {
   const stage = document.getElementById('ink-stage');
   let canvas = document.getElementById('particle-field');
@@ -280,24 +280,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
     seeds[index * 4 + 3] = random();
   }
 
-  const vertexSource = `
-    attribute vec4 a_seed;
+  // Both the translucent ink and the particles use this exact surface and projection.
+  const flowSource = `
     uniform float u_time;
     uniform float u_aspect;
-    uniform float u_pixel_ratio;
     uniform vec3 u_pointer;
     uniform float u_pulse;
-    varying float v_alpha;
-    varying float v_shade;
-    void main() {
-      float u = fract(a_seed.x + u_time * .007);
-      float v = a_seed.y;
+    vec3 flowPoint(float u, float v, float thickness) {
+      u = clamp(u, .0001, .9999);
       float envelope = pow(sin(u * 3.14159265), .65);
-      float angle = v * 1.8 + u * 7.6 - u_time * .16;
+      float angle = v * 2.2 + u * 6.8 - u_time * .16;
+      float fold = .14 * sin(v * 3.0 + u * 6.0 + u_time * .12) * envelope;
       float radius = (.15 + .85 * envelope) * (.85 + .17 * sin(u * 9.0 + u_time * .21));
-      float haze = step(.92, a_seed.w);
-      float thickness = a_seed.z * mix(.025, .16, haze);
-      radius += thickness;
+      radius += thickness + fold;
       vec3 point = vec3(
         (u - .5) * 6.6 + .24 * sin(angle) * envelope,
         .40 + .15 * sin(u * 4.4 + u_time * .13) + sin(angle) * radius * .83,
@@ -311,6 +306,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
       ) * (.035 + abs(thickness) * .38);
       float rotation = u_pointer.x * .16;
       point.xz = mat2(cos(rotation), -sin(rotation), sin(rotation), cos(rotation)) * point.xz;
+      return point;
+    }
+    vec2 projectFlow(vec3 point) {
       float depth = 5.1 - point.z;
       vec2 projected = point.xy * 2.35 / depth;
       projected.x /= u_aspect;
@@ -325,10 +323,26 @@ document.getElementById('year').textContent = new Date().getFullYear();
       projected += (delta * influence * .17 + curl) / vec2(u_aspect, 1.0);
       float ring = exp(-pow((distance - u_pulse * .65) * 4.5, 2.0)) * exp(-u_pulse * 1.8);
       projected += normalize(delta + .001) * ring * .065 / vec2(u_aspect, 1.0);
-      gl_Position = vec4(projected, 0.0, 1.0);
-      gl_PointSize = min(8.0, (1.85 + a_seed.w * .65) * u_pixel_ratio * 4.5 / depth);
+      return projected;
+    }
+  `;
+  const vertexSource = `
+    attribute vec4 a_seed;
+    uniform float u_pixel_ratio;
+    varying float v_alpha;
+    varying float v_shade;
+    ${flowSource}
+    void main() {
+      float u = fract(a_seed.x + u_time * .007);
+      float v = a_seed.y;
+      float haze = step(.92, a_seed.w);
+      float thickness = a_seed.z * mix(.025, .16, haze);
+      vec3 point = flowPoint(u, v, thickness);
+      gl_Position = vec4(projectFlow(point), 0.0, 1.0);
+      gl_PointSize = min(8.0, (1.85 + a_seed.w * .65) * u_pixel_ratio * 4.5 / (5.1-point.z));
       float edge = pow(max(.0, sin(u * 3.14159265)), .38);
-      v_alpha = mix(.58, .09, haze) * edge * exp(-abs(a_seed.z) * .17);
+      v_alpha = mix(.30, .06, haze) * edge * exp(-abs(a_seed.z) * .17);
+      float angle = v * 2.2 + u * 6.8 - u_time * .16;
       v_shade = .34 + .28 * pow(.5 + .5 * sin(angle + .7), 1.5);
     }
   `;
@@ -346,38 +360,31 @@ document.getElementById('year').textContent = new Date().getFullYear();
   const inkVertexSource = `
     attribute vec2 a_position;
     varying vec2 v_uv;
+    varying float v_light;
+    ${flowSource}
     void main() {
-      v_uv = a_position * .5 + .5;
-      gl_Position = vec4(a_position, 0.0, 1.0);
+      float u = a_position.x;
+      float v = a_position.y;
+      vec3 point = flowPoint(u,v,0.0);
+      vec3 along = flowPoint(u+.001,v,0.0)-flowPoint(u-.001,v,0.0);
+      vec3 across = flowPoint(u,v+.001,0.0)-flowPoint(u,v-.001,0.0);
+      vec3 normal = normalize(cross(along,across)+vec3(.00001));
+      v_light = .5+.5*dot(normal,normalize(vec3(-.35,.7,1.0)));
+      v_uv = vec2(u,v*.5+.5);
+      gl_Position = vec4(projectFlow(point),0.0,1.0);
     }
   `;
   const inkFragmentSource = `
     precision mediump float;
     uniform sampler2D u_image;
-    uniform float u_time;
-    uniform float u_aspect;
-    uniform vec3 u_pointer;
-    uniform float u_pulse;
     varying vec2 v_uv;
+    varying float v_light;
     void main() {
-      vec2 screen = vec2(v_uv.x, 1.0-v_uv.y);
-      vec2 cursor = vec2(u_pointer.x*.5+.5, .5-u_pointer.y*.5);
-      vec2 delta = screen-cursor;
-      delta.x *= u_aspect;
-      float distance = length(delta);
-      float influence = exp(-distance*distance*8.0)*u_pointer.z;
-      screen += vec2(-delta.y,delta.x)*influence*.045/vec2(u_aspect,1.0);
-      float ring = exp(-pow((distance-u_pulse*.34)*7.0,2.0))*exp(-u_pulse*1.8);
-      screen += normalize(delta+.001)*ring*.012;
-      float span = mix(.98,.84,smoothstep(.7,1.6,u_aspect));
-      vec2 scale = vec2(span,span*u_aspect/1.5);
-      vec2 uv = (screen-vec2(.45,.37))/scale+.5;
-      uv += vec2(sin(uv.y*8.0+u_time*.19),cos(uv.x*7.0-u_time*.15))*.009;
-      vec4 pigment = texture2D(u_image,clamp(uv,0.0,1.0));
-      float inside = step(0.0,uv.x)*step(uv.x,1.0)*step(0.0,uv.y)*step(uv.y,1.0);
-      float ink = pow(max(0.0,1.0-dot(pigment.rgb,vec3(.299,.587,.114))),.7);
-      float opacity = pigment.a*(.06+.42*ink)*inside;
-      gl_FragColor = vec4(vec3(.43+.16*ink),opacity);
+      vec4 pigment = texture2D(u_image,v_uv);
+      float ink = pigment.a*(1.0-dot(pigment.rgb,vec3(.299,.587,.114)));
+      float edges = pow(max(.0,sin(v_uv.x*3.14159265)),.65)*pow(max(.0,sin(v_uv.y*3.14159265)),.4);
+      float opacity = edges*(.30+.25*v_light)*(.72+.28*ink);
+      gl_FragColor = vec4(vec3(.35+.25*v_light),opacity);
     }
   `;
 
@@ -389,6 +396,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
   let inkProgram;
   let inkBuffer;
   let inkAttribute;
+  let inkIndexBuffer;
+  let inkIndexCount;
   let inkUniforms;
   let inkTexture;
   let textureReady = false;
@@ -436,7 +445,27 @@ document.getElementById('year').textContent = new Date().getFullYear();
       if (!gl.getProgramParameter(inkProgram, gl.LINK_STATUS)) throw new Error('Ink shader linking failed.');
       inkBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, inkBuffer);
-      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+      const rows = 160;
+      const columns = 48;
+      const surface = new Float32Array((rows+1)*(columns+1)*2);
+      const indices = new Uint16Array(rows*columns*6);
+      let vertex = 0;
+      let index = 0;
+      for (let row=0;row<=rows;row++) {
+        for (let column=0;column<=columns;column++) {
+          surface[vertex++]=row/rows;
+          surface[vertex++]=column/columns*2-1;
+          if (row===rows || column===columns) continue;
+          const corner=row*(columns+1)+column;
+          indices.set([corner,corner+1,corner+columns+1,corner+1,corner+columns+2,corner+columns+1],index);
+          index+=6;
+        }
+      }
+      gl.bufferData(gl.ARRAY_BUFFER,surface,gl.STATIC_DRAW);
+      inkIndexBuffer=gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,inkIndexBuffer);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,indices,gl.STATIC_DRAW);
+      inkIndexCount=indices.length;
       inkAttribute = gl.getAttribLocation(inkProgram,'a_position');
       inkUniforms = {};
       for (const name of ['image','time','aspect','pointer','pulse']) inkUniforms[name]=gl.getUniformLocation(inkProgram,'u_'+name);
@@ -480,7 +509,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
         gl.uniform1f(inkUniforms.aspect,width/height);
         gl.uniform3f(inkUniforms.pointer,pointer.x,pointer.y,pointer.strength);
         gl.uniform1f(inkUniforms.pulse,time-pulseTime);
-        gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,inkIndexBuffer);
+        gl.drawElements(gl.TRIANGLES,inkIndexCount,gl.UNSIGNED_SHORT,0);
         gl.disableVertexAttribArray(inkAttribute);
       }
       gl.useProgram(program);
@@ -499,24 +529,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
     if (!fallback) return;
     fallback.setTransform(pixelRatio,0,0,pixelRatio,0,0);
     fallback.clearRect(0,0,width,height);
-    if (textureImage.complete && textureImage.naturalWidth) {
-      const span=width/height<.7?.98:.84;
-      const imageWidth=width*span;
-      const imageHeight=imageWidth/1.5;
-      fallback.save();
-      fallback.globalAlpha=.36;
-      fallback.filter='invert(1) brightness(.65)';
-      const sway=Math.sin(time*.15)*4+pointer.x*5;
-      fallback.drawImage(textureImage,width*.45-imageWidth*.5+sway,height*.37-imageHeight*.5,imageWidth,imageHeight);
-      fallback.restore();
-    }
     fallback.fillStyle = '#8f9790';
     const fit = Math.min(1,width/height/1.45);
     for (let index = 0; index < count; index += 4) {
       const u = (seeds[index*4] + time*.007) % 1;
-      const angle = seeds[index*4+1]*1.8 + u*7.6 - time*.16;
+      const angle = seeds[index*4+1]*2.2 + u*6.8 - time*.16;
       const envelope = Math.pow(Math.sin(u*Math.PI),.65);
-      const radius = (.15+.85*envelope)*(.85+.17*Math.sin(u*9+time*.21)) + seeds[index*4+2]*.1;
+      const fold=.14*Math.sin(seeds[index*4+1]*3+u*6+time*.12)*envelope;
+      const radius = (.15+.85*envelope)*(.85+.17*Math.sin(u*9+time*.21)) + seeds[index*4+2]*.1 + fold;
       const depth = 5.1 - Math.cos(angle)*radius;
       const x = ((u-.5)*6.6+.24*Math.sin(angle)*envelope)*2.35/depth*fit;
       const y = (.40+.15*Math.sin(u*4.4+time*.13)+Math.sin(angle)*radius*.83)*2.35/depth*fit+(1-fit)*.26;
