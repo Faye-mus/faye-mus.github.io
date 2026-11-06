@@ -30,7 +30,13 @@ h1{font-family:var(--serif);font-size:clamp(60px,7.6vw,105px);font-weight:400;le
 .hero-copy .small-link{display:inline-block;margin-top:34px;font-size:11px;border-bottom:1px solid #999999;padding-bottom:4px}
 .small-link:hover{border-color:var(--ink)}
 .hero-art{position:relative;align-self:stretch;display:flex;align-items:center;min-width:0}
-.hero-art svg{width:115%;max-width:none;height:auto;margin-left:-30px;overflow:visible;mix-blend-mode:multiply}
+.ink-stage{position:absolute;inset:0 -12px 22px -22px;touch-action:pan-y;cursor:crosshair;outline-offset:1px}
+.ink-stage svg{display:block;width:100%;height:100%;mix-blend-mode:multiply;pointer-events:none}
+.ink-controls{position:absolute;bottom:12px;left:0;right:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:10px;letter-spacing:.03em;color:var(--muted)}
+.ink-controls button{border:0;background:none;padding:7px 0 7px 10px;font-size:10px;cursor:pointer;color:inherit}
+.ink-controls button:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+#ink-toggle:not(.is-paused) .play-label,#ink-toggle.is-paused .pause-label{display:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .hero-art figcaption{position:absolute;right:-17px;top:70px;writing-mode:vertical-rl;font-family:"Songti SC",var(--serif);font-size:12px;letter-spacing:.42em;color:var(--muted)}
 .hero-foot{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:22px;color:var(--muted);font-size:10px;letter-spacing:.08em}
 .section{padding-block:94px}
@@ -60,7 +66,7 @@ footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid 
 body.zh .intro{line-height:2.1;letter-spacing:.04em}body.zh h2,body.zh .work-title{font-family:"Songti SC",var(--serif)}body.zh h2{letter-spacing:.1em;font-size:29px}body.zh .work-title{font-size:23px;letter-spacing:.02em}
 @media(min-width:1500px){.hero{min-height:650px}}
 @media(max-width:800px){.wrap{width:calc(100% - 60px)}.hero{min-height:530px;gap:10px}.hero-art figcaption{right:-7px}.section-heading,.about{grid-template-columns:145px 1fr;gap:25px}.work-list{margin-left:170px}.work-title{font-size:23px}.work summary{column-gap:15px}.section{padding-block:70px}.hero-foot{font-size:9px}}
-@media(max-width:580px){.wrap{width:calc(100% - 40px)}.site-head{min-height:82px;gap:14px}.signature{font-size:17px}.navigation{gap:20px;font-size:11px}.language{gap:6px;margin-left:0;font-size:10px}.hero{min-height:0;grid-template-columns:1fr;padding:48px 0 31px;gap:0}.hero-copy{padding-bottom:0}.hero .eyebrow{font-size:9px}h1{font-size:76px;margin-top:23px}.cn-name{font-size:17px}.intro{font-size:12px;max-width:290px;margin-top:24px}.hero-copy .small-link{margin-top:24px}.hero-art{height:210px;margin-top:24px}.hero-art svg{width:100%;margin:0}.hero-art figcaption{top:35px;right:0;font-size:10px}.hero-foot{align-items:flex-start;gap:15px;padding-bottom:18px;font-size:9px}.section{padding-block:58px}.section-heading,.about{grid-template-columns:1fr;gap:17px}.section-heading{margin-bottom:27px}.section-label span:first-child{margin-right:12px}h2{font-size:30px}.work-list{margin-left:0}.work summary{padding:23px 0;grid-template-columns:1fr 35px 12px;gap:13px}.work-title{font-size:23px}.work-sub{font-size:10px;margin-top:6px}.work-year{font-size:10px}.work-body{padding-right:0;font-size:12px}.about{padding-top:58px;gap:30px}.about-head h2{margin-top:15px}.bio p{font-size:12px;line-height:1.95}.presentations ul{font-size:13px;gap:6px 18px}footer{padding-block:21px 30px;font-size:9px}}
+@media(max-width:580px){.wrap{width:calc(100% - 40px)}.site-head{min-height:82px;gap:14px}.signature{font-size:17px}.navigation{gap:20px;font-size:11px}.language{gap:6px;margin-left:0;font-size:10px}.hero{min-height:0;grid-template-columns:1fr;padding:48px 0 31px;gap:0}.hero-copy{padding-bottom:0}.hero .eyebrow{font-size:9px}h1{font-size:76px;margin-top:23px}.cn-name{font-size:17px}.intro{font-size:12px;max-width:290px;margin-top:24px}.hero-copy .small-link{margin-top:24px}.hero-art{height:290px;margin-top:24px}.ink-stage{inset:0 0 23px}.ink-controls{bottom:0;right:0;font-size:9px}.ink-controls button{font-size:9px}.hero-art figcaption{top:35px;right:0;font-size:10px}.hero-foot{align-items:flex-start;gap:15px;padding-bottom:18px;font-size:9px}.section{padding-block:58px}.section-heading,.about{grid-template-columns:1fr;gap:17px}.section-heading{margin-bottom:27px}.section-label span:first-child{margin-right:12px}h2{font-size:30px}.work-list{margin-left:0}.work summary{padding:23px 0;grid-template-columns:1fr 35px 12px;gap:13px}.work-title{font-size:23px}.work-sub{font-size:10px;margin-top:6px}.work-year{font-size:10px}.work-body{padding-right:0;font-size:12px}.about{padding-top:58px;gap:30px}.about-head h2{margin-top:15px}.bio p{font-size:12px;line-height:1.95}.presentations ul{font-size:13px;gap:6px 18px}footer{padding-block:21px 30px;font-size:9px}}
 @media(max-width:360px){.navigation{gap:13px}.signature{font-size:15px}.language{font-size:9px}.wrap{width:calc(100% - 32px)}h1{font-size:66px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
@@ -87,29 +93,22 @@ body.zh .intro{line-height:2.1;letter-spacing:.04em}body.zh h2,body.zh .work-tit
       <a class="small-link" href="#work"><span class="en">Selected work</span><span class="zh">作品目录</span><span aria-hidden="true"> &nbsp; ↓</span></a>
     </div>
     <figure class="hero-art">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 540" fill="none" aria-hidden="true">
-<defs>
-  <filter id="wash" x="-20%" y="-30%" width="140%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".015 .025" numOctaves="4" seed="12" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="23" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="2.2"/></filter>
-  <filter id="edge" x="-20%" y="-30%" width="140%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".05 .09" numOctaves="3" seed="7" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="10" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation=".65"/></filter>
-  <linearGradient id="mist" x1="350" y1="215" x2="350" y2="420" gradientUnits="userSpaceOnUse"><stop stop-color="#505050" stop-opacity=".23"/><stop offset="1" stop-color="#505050" stop-opacity="0"/></linearGradient>
-  <linearGradient id="deep" x1="380" y1="230" x2="365" y2="400" gradientUnits="userSpaceOnUse"><stop stop-color="#222222" stop-opacity=".8"/><stop offset=".5" stop-color="#474747" stop-opacity=".52"/><stop offset="1" stop-color="#747474" stop-opacity="0"/></linearGradient>
-</defs>
-<g filter="url(#wash)">
-  <path d="M37 334C87 332 117 304 155 305C175 305 207 279 225 278C260 281 276 218 301 206C324 221 344 263 370 267C396 273 432 220 457 234C486 251 496 285 527 292C555 294 578 318 606 337L609 404H27Z" fill="url(#mist)"/>
-  <path d="M72 347C112 344 136 329 159 316C175 308 195 322 212 312C239 290 248 255 271 248C294 271 310 316 337 305C369 289 385 230 408 218C430 231 445 262 462 275C481 294 500 285 517 306C543 338 568 335 594 349L605 415H67Z" fill="url(#deep)"/>
-  <path d="M175 356C202 350 224 334 245 334C266 339 283 367 307 355C335 342 353 285 378 269C391 270 415 315 432 323C461 343 494 338 514 359L527 400H158Z" fill="#555555" opacity=".16"/>
-</g>
-<g filter="url(#edge)" stroke="#282828" stroke-linecap="round">
-  <path d="M315 319C349 309 377 248 408 220C416 231 421 244 429 252" stroke-width="2.4" opacity=".62"/>
-  <path d="M356 318C381 289 383 265 405 231M387 292C399 280 405 262 409 252M405 312C410 296 415 284 420 277" stroke-width="1.2" opacity=".25"/>
-  <path d="M211 316C238 290 254 255 270 250L285 269" stroke-width="1.8" opacity=".5"/>
-  <path d="M274 282L268 297M266 275L253 301M392 270L384 285" stroke-width="1.1" opacity=".22"/>
-</g>
-<g stroke="#777777" stroke-width=".6" opacity=".2"><path d="M116 373C229 367 335 383 520 371M182 389C284 381 411 396 553 386M60 355C105 350 140 355 169 353"/></g>
-<g fill="#292929" opacity=".52"><path d="M482 182q5-4 10 0q4-4 8-2q-5 0-8 5q-5-4-10-3Z"/><path d="M509 168q4-3 7 0q3-3 6-1q-4 0-6 3q-3-3-7-2Z"/></g>
-</svg>
+<div class="ink-stage" id="ink-stage" tabindex="0" role="group" aria-label="Interactive ink lines" aria-describedby="ink-hint ink-keyboard">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" preserveAspectRatio="none" aria-hidden="true">
+    <defs><filter id="ink-softness" x="-15%" y="-30%" width="130%" height="160%"><feGaussianBlur stdDeviation="2.4"/></filter></defs>
+    <g id="ink-strokes"></g>
+  </svg>
+</div>
+<div class="ink-controls">
+  <span id="ink-hint"><span class="en">Move, touch or drag</span><span class="zh">移动、触摸或拖动</span></span>
+  <button id="ink-toggle" type="button" aria-pressed="false">
+    <span class="pause-label"><span class="en">Pause</span><span class="zh">暂停</span></span>
+    <span class="play-label"><span class="en">Resume</span><span class="zh">继续</span></span>
+  </button>
+</div>
+<span class="sr-only" id="ink-keyboard"><span class="en">Use the arrow keys to bend the ink lines.</span><span class="zh">可用方向键改变墨线的走势。</span></span>
 
-      <figcaption lang="zh-CN">声音 · 空间 · 身体</figcaption>
+      <figcaption><span class="en">Movement · Interaction</span><span class="zh">流动 · 交互</span></figcaption>
     </figure>
   </section>
   <div class="hero-foot"><span><span class="en">Composer · Sound artist</span><span class="zh">作曲 · 声音艺术</span></span><span><span class="en">Indiana, United States</span><span class="zh">美国 · 印第安纳</span></span></div>
@@ -277,6 +276,7 @@ function setLanguage(next) {
   language = next;
   document.body.classList.toggle('zh', next === 'zh');
   document.documentElement.lang = next === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('ink-stage').setAttribute('aria-label', next === 'zh' ? '可交互的水墨线条' : 'Interactive ink lines');
   for (const code of ['en', 'zh']) document.getElementById('lang-' + code).setAttribute('aria-pressed', String(code === next));
   try { localStorage.setItem('fy-lang', next); } catch {}
 }
@@ -284,6 +284,191 @@ document.getElementById('lang-en').addEventListener('click', () => setLanguage('
 document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
 setLanguage(language);
 document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script>
+// The ink is drawn as open, pressure-varying strokes in a shared flow field.
+(() => {
+  const stage = document.getElementById('ink-stage');
+  const drawing = document.getElementById('ink-strokes');
+  const toggle = document.getElementById('ink-toggle');
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  const namespace = 'http://www.w3.org/2000/svg';
+  const strokes = [];
+  const pulses = [];
+  const pointer = {x:320, y:280, targetX:320, targetY:280, strength:0, targetStrength:0};
+  let time = 0;
+  let lastFrame = 0;
+  let frame = 0;
+  let visible = true;
+  let paused = motionPreference.matches;
+  let dragging = false;
+
+  // Translucent washes sit behind the darker brush marks and fine dry edges.
+  for (let index = 0; index < 26; index++) {
+    const path = document.createElementNS(namespace, 'path');
+    const wash = index < 3;
+    const brush = index >= 3 && index < 6;
+    path.setAttribute('fill', brush ? '#222' : 'none');
+    path.setAttribute('stroke', brush ? 'none' : '#222');
+    path.setAttribute('opacity', wash ? '.045' : brush ? '.66' : String(.1 + (index % 5) * .045));
+    path.setAttribute('stroke-width', wash ? '19' : String(.32 + (index % 4) * .17));
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    if (wash) path.setAttribute('filter', 'url(#ink-softness)');
+    drawing.append(path);
+    strokes.push({path, brush, family:index % 3, offset: index < 6 ? 0 : (index - 15.5) * 2.1});
+  }
+
+  function pointAt(position, family, offset) {
+    const envelope = Math.sin(Math.PI * position);
+    const phase = family * 1.5 + time * .23;
+    let x = 57 + 523 * position + 70 * Math.sin(position * 6.28 + phase * .7) * envelope;
+    let y = 365 - 160 * position + 142 * Math.sin(position * 6.28 + phase) * envelope;
+    x += offset * Math.cos(position * 7 + phase) * envelope;
+    y += offset * Math.sin(position * 5 + phase + .8) * envelope;
+    const dx = x - pointer.x;
+    const dy = y - pointer.y;
+    const influence = Math.exp(-(dx * dx + dy * dy) / 23000) * pointer.strength;
+    x += (dx * .3 - dy * .55) * influence;
+    y += (dy * .3 + dx * .55) * influence;
+    for (const pulse of pulses) {
+      const distance = Math.hypot(x - pulse.x, y - pulse.y);
+      const age = time - pulse.time;
+      const wave = Math.exp(-Math.pow((distance - age * 115) / 57, 2)) * Math.exp(-age * 1.8) * 21;
+      x += (x - pulse.x) / Math.max(distance, 1) * wave;
+      y += (y - pulse.y) / Math.max(distance, 1) * wave;
+    }
+    return {x, y};
+  }
+
+  function render() {
+    for (const stroke of strokes) {
+      const front = [];
+      const back = [];
+      for (let index = 0; index <= 85; index++) {
+        const position = index / 85;
+        const point = pointAt(position, stroke.family, stroke.offset);
+        if (stroke.brush) {
+          const next = pointAt(Math.min(1, position + .002), stroke.family, stroke.offset);
+          const angle = Math.atan2(next.y - point.y, next.x - point.x) + Math.PI / 2;
+          const pressure = Math.pow(Math.sin(Math.PI * position), .85) *
+            (2.3 + 4.8 * (.5 + .5 * Math.sin(position * 9 + stroke.family + time * .19)));
+          const edge = pressure * (1 + .08 * Math.sin(index * 2.3 + stroke.family));
+          front.push((point.x + Math.cos(angle) * edge).toFixed(2) + ',' + (point.y + Math.sin(angle) * edge).toFixed(2));
+          back.push((point.x - Math.cos(angle) * pressure).toFixed(2) + ',' + (point.y - Math.sin(angle) * pressure).toFixed(2));
+        } else {
+          front.push(point.x.toFixed(2) + ',' + point.y.toFixed(2));
+        }
+      }
+      stroke.path.setAttribute('d', 'M' + front.join('L') + (stroke.brush ? 'L' + back.reverse().join('L') + 'Z' : ''));
+    }
+  }
+
+  function animate(timestamp) {
+    frame = 0;
+    if (paused || !visible || document.hidden) return;
+    if (timestamp - lastFrame >= 32) {
+      const elapsed = lastFrame ? Math.min((timestamp - lastFrame) / 1000, .05) : 0;
+      lastFrame = timestamp;
+      time += elapsed;
+      const easing = 1 - Math.exp(-elapsed * 9);
+      pointer.x += (pointer.targetX - pointer.x) * easing;
+      pointer.y += (pointer.targetY - pointer.y) * easing;
+      pointer.strength += (pointer.targetStrength - pointer.strength) * easing;
+      while (pulses.length && time - pulses[0].time > 3) pulses.shift();
+      render();
+    }
+    frame = requestAnimationFrame(animate);
+  }
+
+  function updatePlayback() {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    lastFrame = 0;
+    toggle.classList.toggle('is-paused', paused);
+    toggle.setAttribute('aria-pressed', String(paused));
+    if (!paused && visible && !document.hidden) frame = requestAnimationFrame(animate);
+  }
+
+  function updatePointer(event) {
+    const bounds = stage.getBoundingClientRect();
+    pointer.targetX = Math.max(0, Math.min(640, (event.clientX - bounds.left) / bounds.width * 640));
+    pointer.targetY = Math.max(0, Math.min(560, (event.clientY - bounds.top) / bounds.height * 560));
+    pointer.targetStrength = dragging ? 1.6 : .85;
+    if (paused) {
+      pointer.x = pointer.targetX;
+      pointer.y = pointer.targetY;
+      pointer.strength = pointer.targetStrength;
+      render();
+    }
+  }
+
+  function stir() {
+    pulses.push({x:pointer.targetX, y:pointer.targetY, time});
+    if (pulses.length > 8) pulses.shift();
+  }
+
+  function releasePointer() {
+    dragging = false;
+    pointer.targetStrength = 0;
+    if (paused) {
+      pointer.strength = 0;
+      pulses.length = 0;
+      render();
+    }
+  }
+
+  stage.addEventListener('pointermove', event => {
+    updatePointer(event);
+    if (dragging) {
+      const latest = pulses[pulses.length - 1];
+      if (!latest || Math.hypot(pointer.targetX - latest.x, pointer.targetY - latest.y) > 30) stir();
+    }
+  });
+  stage.addEventListener('pointerdown', event => {
+    dragging = true;
+    stage.setPointerCapture(event.pointerId);
+    updatePointer(event);
+    stir();
+  });
+  stage.addEventListener('pointerup', releasePointer);
+  stage.addEventListener('pointercancel', releasePointer);
+  stage.addEventListener('pointerleave', () => { if (!dragging) releasePointer(); });
+  stage.addEventListener('lostpointercapture', releasePointer);
+  stage.addEventListener('blur', releasePointer);
+  stage.addEventListener('keydown', event => {
+    const directions = {ArrowLeft:[-35,0], ArrowRight:[35,0], ArrowUp:[0,-35], ArrowDown:[0,35]};
+    const direction = directions[event.key];
+    if (!direction) return;
+    event.preventDefault();
+    pointer.targetX = Math.max(50, Math.min(590, pointer.targetX + direction[0]));
+    pointer.targetY = Math.max(60, Math.min(500, pointer.targetY + direction[1]));
+    pointer.targetStrength = 1.2;
+    stir();
+    if (paused) {
+      pointer.x = pointer.targetX;
+      pointer.y = pointer.targetY;
+      pointer.strength = 1.2;
+      render();
+    }
+  });
+  toggle.addEventListener('click', () => {
+    paused = !paused;
+    updatePlayback();
+  });
+  motionPreference.addEventListener('change', event => {
+    paused = event.matches;
+    updatePlayback();
+  });
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    updatePlayback();
+  }).observe(stage);
+  document.addEventListener('visibilitychange', updatePlayback);
+  render();
+  updatePlayback();
+})();
+
 </script>
 </body>
 </html>
