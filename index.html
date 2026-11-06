@@ -2,229 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Feihong Yu — media artist and interaction designer working with sound, light and the body.">
-<title>Feihong Yu</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-body{margin:0}img{max-width:100%}[hidden]{display:none!important}
-
-/* Layout: full-bleed fitted wordmark on top (after jarcos) → sticky bio column left + grid of small "window" works right (after joshuabaker) → FIG.-numbered technical-plate labels (after karolortyl). */
-:root{
-  --paper:#E2E4EA;      /* cool chalk grey, faint blue bias */
-  --win:#EEF0F4;        /* window surface */
-  --ink:#14173A;        /* deep navy ink */
-  --mute:#5E6382;
-  --line:rgba(20,23,58,.22);
-  --ultra:#2A2EDB;      /* ultramarine — the one bold move */
-  --rose:#E48FA8;       /* used only inside the generative plates */
-  --amber:#E9A93A;
-  --f-display:"Archivo","Helvetica Neue",Arial,"PingFang SC","Noto Sans SC",sans-serif;
-  --f-body:"Archivo","Helvetica Neue",Arial,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,"PingFang SC",monospace;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --paper:#0C0E22;--win:#14173A;--ink:#E3E5F0;--mute:#9095B4;--line:rgba(227,229,240,.2);
-  --ultra:#8288FF;--rose:#E58BA5;--amber:#E9B24E;color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#0C0E22;--win:#14173A;--ink:#E3E5F0;--mute:#9095B4;--line:rgba(227,229,240,.2);
-  --ultra:#8288FF;--rose:#E58BA5;--amber:#E9B24E;color-scheme:dark}
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8f8f8">
+<meta name="description" content="Feihong Yu — composer working with electronic music, spatial sound, and interactive media.">
+<title>Feihong Yu — Composition &amp; Sound</title>
+<style>:root{color-scheme:light;--paper:#f8f8f8;--ink:#222222;--muted:#686868;--line:#d8d8d8;--serif:Georgia,"Songti SC","Noto Serif CJK SC",serif;--sans:"Helvetica Neue",Arial,"PingFang SC",sans-serif}
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  -webkit-font-smoothing:antialiased}
-.wrap{max-width:1440px;margin:0 auto;padding-block:20px 40px}
-a{color:inherit}
-button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--ultra);outline-offset:3px}
-
-/* language */
-body:not(.zh) .zh{display:none!important}
-body.zh .en{display:none!important}
-
-.mono{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
-
-/* top bar */
-.bar{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px}
-.bar nav{display:flex;gap:22px}
-.bar nav a{text-decoration:none}
-.bar nav a:hover{color:var(--ultra)}
-.bar .right{display:flex;gap:20px;align-items:baseline}
-.lang{display:flex;border:1px solid var(--ink)}
-.lang button{background:none;border:0;padding:3px 9px;cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.clock{font-variant-numeric:tabular-nums;color:var(--mute)}
-
-/* wordmark */
-.mark{padding-block:18px 8px;color:var(--ultra)}
-.mark .ln{display:block;white-space:nowrap;font-family:var(--f-display);font-weight:800;font-stretch:125%;
-  line-height:.86;letter-spacing:-.035em;font-size:clamp(48px,14vw,220px)}
-.mark .ln2{font-weight:300;font-stretch:112%;letter-spacing:-.03em}
-.mark .slash{font-weight:200}
-.strip{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding-block:8px;margin-top:14px}
-.strip span{color:var(--mute)}
-.strip b{font-weight:500;color:var(--ink)}
-
-/* main */
-main{display:grid;grid-template-columns:minmax(260px,4fr) 9fr;gap:48px;margin-top:40px;align-items:start}
-aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);min-width:0;display:grid;gap:28px}
-.lede{font-size:21px;line-height:1.35;letter-spacing:-.01em;text-wrap:balance;max-width:30ch}
-body.zh .lede{letter-spacing:0;line-height:1.55}
-.bio p{margin:0 0 .8em;max-width:62ch;color:var(--ink)}
-.facts{display:grid;gap:0;border-top:1px solid var(--line)}
-.facts div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding-block:9px;border-bottom:1px solid var(--line)}
-.facts dt{color:var(--mute);margin:0}
-.facts dd{margin:0;min-width:0}
-.links{display:flex;flex-wrap:wrap;gap:8px 18px}
-.links a{text-decoration:none;border-bottom:1px solid var(--ultra)}
-.links a:hover{color:var(--ultra)}
-
-/* works grid */
-.works{min-width:0}
-.works h2{margin:0 0 14px;display:flex;justify-content:space-between;font-weight:500}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}
-.card{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
-.window{background:var(--win);border:1px solid var(--ink);transition:transform .25s ease,box-shadow .25s ease}
-.card:hover .window,.card:focus-visible .window{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ultra)}
-.tbar{display:flex;align-items:center;gap:10px;padding:6px 10px;border-bottom:1px solid var(--ink)}
-.tbar .sq{display:flex;gap:4px}
-.tbar .sq i{width:8px;height:8px;border:1px solid var(--ink);display:block}
-.card:hover .tbar .sq i:first-child{background:var(--ultra);border-color:var(--ultra)}
-.tbar .fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:.02em}
-.plate{position:relative;aspect-ratio:4/3;max-width:100%}
-.plate canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.plate .play{position:absolute;right:10px;bottom:10px;background:var(--ink);color:var(--paper);padding:3px 8px}
-.cap{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;padding-top:10px}
-.cap .fig{color:var(--ultra)}
-.cap .t{font-weight:600;font-size:16px;letter-spacing:-.005em}
-.cap .y{color:var(--mute)}
-.card .sub{margin-top:2px;color:var(--mute);font-size:13.5px;padding-left:0}
-
-footer{margin-top:72px;border-top:1px solid var(--ink);padding-top:12px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
-footer span{color:var(--mute)}
-
-/* lightbox */
-.lb{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(6px);
-  display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px))}
-.lb .window{width:min(1080px,100%);max-height:100%;overflow:auto;box-shadow:10px 10px 0 var(--ultra)}
-.lb .tbar button{background:none;border:1px solid var(--ink);cursor:pointer;padding:1px 8px}
-.lb .body{display:grid;grid-template-columns:3fr 2fr;gap:0}
-.lb .media{position:relative;background:var(--ink);aspect-ratio:16/10;max-width:100%;min-width:0}
-.lb .media video,.lb .media iframe,.lb .media canvas{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
-.lb .media canvas{background:var(--win)}
-.lb .media .note{position:absolute;left:12px;bottom:12px;right:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.lb .media .note span{background:var(--paper);padding:3px 8px}
-.lb .media .note a{background:var(--ultra);color:#fff;padding:3px 8px;text-decoration:none}
-.lb .info{padding:22px;display:grid;gap:16px;align-content:start;min-width:0;border-left:1px solid var(--ink)}
-.lb h3{margin:0;font-family:var(--f-display);font-stretch:110%;font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
-.lb .info p{margin:0;max-width:60ch}
-
-@media (max-width:900px){
-  main{grid-template-columns:1fr;gap:40px}
-  aside{position:static}
-  .lb .body{grid-template-columns:1fr}
-  .lb .info{border-left:0;border-top:1px solid var(--ink)}
-}
-@media (max-width:560px){
-  .grid{grid-template-columns:1fr}
-  .bar nav{gap:14px}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html{scroll-behavior:smooth;scroll-padding-top:35px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}p,h1,h2,h3,figure,dl,dd{margin:0}button,a,summary{-webkit-tap-highlight-color:transparent}::selection{background:#242622;color:var(--paper)}:focus-visible{outline:1px solid var(--ink);outline-offset:5px}
+body:not(.zh) .zh,body.zh .en{display:none!important}
+.wrap{width:min(1100px,calc(100% - 96px));margin-inline:auto}
+.skip{position:fixed;top:8px;left:8px;z-index:5;padding:8px 16px;background:var(--ink);color:var(--paper);transform:translateY(-160%)}.skip:focus{transform:none}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:30px;min-height:106px}
+.signature{font-family:var(--serif);font-size:20px;letter-spacing:-.02em;white-space:nowrap}
+.navigation{display:flex;align-items:center;gap:39px;font-size:12px}
+.navigation a{padding-block:8px}.navigation a:hover{text-decoration:underline;text-underline-offset:5px}
+.language{display:flex;align-items:center;gap:9px;margin-left:12px;font-size:11px;white-space:nowrap}
+.language button{border:0;border-bottom:1px solid transparent;background:none;padding:4px 1px;cursor:pointer;color:var(--muted);line-height:1.4}
+.language button[aria-pressed=true]{border-bottom-color:var(--ink);color:var(--ink)}.language span{color:#b1b1b1}
+.hero{position:relative;min-height:590px;display:grid;grid-template-columns:1fr 1.1fr;gap:30px;align-items:center;padding:55px 0 85px}
+.hero-copy{position:relative;z-index:1;padding-bottom:9px}
+.eyebrow{font-size:10px;letter-spacing:.19em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--serif);font-size:clamp(60px,7.6vw,105px);font-weight:400;letter-spacing:-.055em;line-height:1.05;margin:25px 0 17px}
+.cn-name{display:block;font-family:"Songti SC",var(--serif);font-size:20px;letter-spacing:.35em;font-weight:400;margin-left:5px}
+.intro{max-width:315px;font-size:13px;line-height:1.9;margin-top:28px;color:var(--muted)}
+.hero-copy .small-link{display:inline-block;margin-top:34px;font-size:11px;border-bottom:1px solid #999999;padding-bottom:4px}
+.small-link:hover{border-color:var(--ink)}
+.hero-art{position:relative;align-self:stretch;display:flex;align-items:center;min-width:0}
+.hero-art svg{width:115%;max-width:none;height:auto;margin-left:-30px;overflow:visible;mix-blend-mode:multiply}
+.hero-art figcaption{position:absolute;right:-17px;top:70px;writing-mode:vertical-rl;font-family:"Songti SC",var(--serif);font-size:12px;letter-spacing:.42em;color:var(--muted)}
+.hero-foot{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:22px;color:var(--muted);font-size:10px;letter-spacing:.08em}
+.section{padding-block:94px}
+.section-heading{display:grid;grid-template-columns:210px 1fr;align-items:start;gap:35px;margin-bottom:36px}
+.section-label{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.section-label span:first-child{display:inline-block;margin-right:20px;font-family:var(--serif);font-style:italic;font-size:13px}
+h2{font:400 34px/1.3 var(--serif);letter-spacing:-.025em}
+.work-list{margin-left:245px;border-top:1px solid var(--line)}
+.work{border-bottom:1px solid var(--line)}
+.work summary{display:grid;grid-template-columns:1fr 58px 20px;align-items:center;column-gap:24px;cursor:pointer;padding:25px 0 28px;list-style:none}
+.work summary::-webkit-details-marker{display:none}.work summary::marker{content:""}
+.work-title{display:block;font:400 26px/1.4 var(--serif);letter-spacing:-.025em;transition:transform .2s}
+.work-sub{display:block;margin-top:7px;color:var(--muted);font-size:11px;line-height:1.65}
+.work-year{font-size:11px;color:var(--muted);align-self:center;text-align:right}
+.work-toggle{position:relative;width:12px;height:12px;justify-self:end}
+.work-toggle::before,.work-toggle::after{content:"";position:absolute;top:6px;left:0;width:12px;height:1px;background:var(--ink)}
+.work-toggle::after{transform:rotate(90deg)}.work[open] .work-toggle::after{transform:none}
+.work summary:hover .work-title{transform:translateX(4px)}
+.work-body{padding:0 42px 30px 0;font-size:13px;color:var(--muted);max-width:660px}
+.work-facts{display:grid;grid-template-columns:70px 1fr;gap:9px 18px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;line-height:1.7}
+.work-facts dt{color:var(--muted)}.work-facts dd{color:var(--ink)}.work-media{display:block;width:100%;margin-top:24px;border:0}.work-media:is(video,iframe){aspect-ratio:16/9;background:#151515}.work-media:is(img){max-height:420px;object-fit:contain}
+.about{border-top:1px solid var(--line);display:grid;grid-template-columns:210px 1fr;gap:35px;padding-top:85px}
+.about-head h2{margin-top:25px;font-size:30px}.about-head .cn-name{font-size:14px;letter-spacing:.25em;margin-top:13px;margin-left:0}
+.bio{max-width:650px}.bio p{font-size:13px;line-height:1.95;margin-bottom:17px;color:#555555}.bio p:first-child{color:var(--ink)}
+.presentations{border-top:1px solid var(--line);margin-top:30px;padding-top:20px}.presentations p{font-size:10px;color:var(--muted);margin-bottom:10px}.presentations ul{display:flex;flex-wrap:wrap;gap:7px 22px;padding:0;margin:0;list-style:none;font-family:var(--serif);font-size:14px}
+footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-block:26px 44px;color:var(--muted);font-size:10px;letter-spacing:.03em}footer a:hover{color:var(--ink)}
+body.zh .intro{line-height:2.1;letter-spacing:.04em}body.zh h2,body.zh .work-title{font-family:"Songti SC",var(--serif)}body.zh h2{letter-spacing:.1em;font-size:29px}body.zh .work-title{font-size:23px;letter-spacing:.02em}
+@media(min-width:1500px){.hero{min-height:650px}}
+@media(max-width:800px){.wrap{width:calc(100% - 60px)}.hero{min-height:530px;gap:10px}.hero-art figcaption{right:-7px}.section-heading,.about{grid-template-columns:145px 1fr;gap:25px}.work-list{margin-left:170px}.work-title{font-size:23px}.work summary{column-gap:15px}.section{padding-block:70px}.hero-foot{font-size:9px}}
+@media(max-width:580px){.wrap{width:calc(100% - 40px)}.site-head{min-height:82px;gap:14px}.signature{font-size:17px}.navigation{gap:20px;font-size:11px}.language{gap:6px;margin-left:0;font-size:10px}.hero{min-height:0;grid-template-columns:1fr;padding:48px 0 31px;gap:0}.hero-copy{padding-bottom:0}.hero .eyebrow{font-size:9px}h1{font-size:76px;margin-top:23px}.cn-name{font-size:17px}.intro{font-size:12px;max-width:290px;margin-top:24px}.hero-copy .small-link{margin-top:24px}.hero-art{height:210px;margin-top:24px}.hero-art svg{width:100%;margin:0}.hero-art figcaption{top:35px;right:0;font-size:10px}.hero-foot{align-items:flex-start;gap:15px;padding-bottom:18px;font-size:9px}.section{padding-block:58px}.section-heading,.about{grid-template-columns:1fr;gap:17px}.section-heading{margin-bottom:27px}.section-label span:first-child{margin-right:12px}h2{font-size:30px}.work-list{margin-left:0}.work summary{padding:23px 0;grid-template-columns:1fr 35px 12px;gap:13px}.work-title{font-size:23px}.work-sub{font-size:10px;margin-top:6px}.work-year{font-size:10px}.work-body{padding-right:0;font-size:12px}.about{padding-top:58px;gap:30px}.about-head h2{margin-top:15px}.bio p{font-size:12px;line-height:1.95}.presentations ul{font-size:13px;gap:6px 18px}footer{padding-block:21px 30px;font-size:9px}}
+@media(max-width:360px){.navigation{gap:13px}.signature{font-size:15px}.language{font-size:9px}.wrap{width:calc(100% - 32px)}h1{font-size:66px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#main"><span class="en">Skip to content</span><span class="zh">跳到主要内容</span></a>
+<header class="wrap site-head">
+  <a class="signature" href="#top" aria-label="Feihong Yu">Feihong Yu</a>
+  <nav class="navigation" aria-label="Main navigation">
+    <a href="#work"><span class="en">Work</span><span class="zh">作品</span></a>
+    <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
+    <div class="language" role="group" aria-label="Language">
+      <button type="button" id="lang-en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" id="lang-zh" aria-pressed="false" lang="zh-CN">中文</button>
+    </div>
+  </nav>
+</header>
+<main id="main" class="wrap">
+  <section class="hero" aria-labelledby="artist-name">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="en">Composition &amp; sound</span><span class="zh">作曲与声音创作</span></p>
+      <h1 id="artist-name">Feihong Yu</h1>
+      <span class="cn-name" lang="zh-CN">喻飞鸿</span>
+      <p class="intro"><span class="en">Electronic music, spatial sound,<br>and interactions between sound and the body.</span><span class="zh">电子音乐、空间声音，<br>以及声音与身体之间的互动。</span></p>
+      <a class="small-link" href="#work"><span class="en">Selected work</span><span class="zh">作品目录</span><span aria-hidden="true"> &nbsp; ↓</span></a>
+    </div>
+    <figure class="hero-art">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 540" fill="none" aria-hidden="true">
+<defs>
+  <filter id="wash" x="-20%" y="-30%" width="140%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".015 .025" numOctaves="4" seed="12" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="23" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="2.2"/></filter>
+  <filter id="edge" x="-20%" y="-30%" width="140%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".05 .09" numOctaves="3" seed="7" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="10" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation=".65"/></filter>
+  <linearGradient id="mist" x1="350" y1="215" x2="350" y2="420" gradientUnits="userSpaceOnUse"><stop stop-color="#505050" stop-opacity=".23"/><stop offset="1" stop-color="#505050" stop-opacity="0"/></linearGradient>
+  <linearGradient id="deep" x1="380" y1="230" x2="365" y2="400" gradientUnits="userSpaceOnUse"><stop stop-color="#222222" stop-opacity=".8"/><stop offset=".5" stop-color="#474747" stop-opacity=".52"/><stop offset="1" stop-color="#747474" stop-opacity="0"/></linearGradient>
+</defs>
+<g filter="url(#wash)">
+  <path d="M37 334C87 332 117 304 155 305C175 305 207 279 225 278C260 281 276 218 301 206C324 221 344 263 370 267C396 273 432 220 457 234C486 251 496 285 527 292C555 294 578 318 606 337L609 404H27Z" fill="url(#mist)"/>
+  <path d="M72 347C112 344 136 329 159 316C175 308 195 322 212 312C239 290 248 255 271 248C294 271 310 316 337 305C369 289 385 230 408 218C430 231 445 262 462 275C481 294 500 285 517 306C543 338 568 335 594 349L605 415H67Z" fill="url(#deep)"/>
+  <path d="M175 356C202 350 224 334 245 334C266 339 283 367 307 355C335 342 353 285 378 269C391 270 415 315 432 323C461 343 494 338 514 359L527 400H158Z" fill="#555555" opacity=".16"/>
+</g>
+<g filter="url(#edge)" stroke="#282828" stroke-linecap="round">
+  <path d="M315 319C349 309 377 248 408 220C416 231 421 244 429 252" stroke-width="2.4" opacity=".62"/>
+  <path d="M356 318C381 289 383 265 405 231M387 292C399 280 405 262 409 252M405 312C410 296 415 284 420 277" stroke-width="1.2" opacity=".25"/>
+  <path d="M211 316C238 290 254 255 270 250L285 269" stroke-width="1.8" opacity=".5"/>
+  <path d="M274 282L268 297M266 275L253 301M392 270L384 285" stroke-width="1.1" opacity=".22"/>
+</g>
+<g stroke="#777777" stroke-width=".6" opacity=".2"><path d="M116 373C229 367 335 383 520 371M182 389C284 381 411 396 553 386M60 355C105 350 140 355 169 353"/></g>
+<g fill="#292929" opacity=".52"><path d="M482 182q5-4 10 0q4-4 8-2q-5 0-8 5q-5-4-10-3Z"/><path d="M509 168q4-3 7 0q3-3 6-1q-4 0-6 3q-3-3-7-2Z"/></g>
+</svg>
 
-<div class="wrap">
-  <header class="bar">
-    <nav class="mono" aria-label="Sections">
-      <a href="#work"><span class="en">Work</span><span class="zh">作品</span></a>
-      <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
-      <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
-    </nav>
-    <div class="right mono">
-      <span class="clock" id="clock">Indiana, US</span>
-      <div class="lang" role="group" aria-label="Language">
-        <button id="lang-en" type="button" aria-pressed="true">EN</button>
-        <button id="lang-zh" type="button" aria-pressed="false">中文</button>
+      <figcaption lang="zh-CN">声音 · 空间 · 身体</figcaption>
+    </figure>
+  </section>
+  <div class="hero-foot"><span><span class="en">Composer · Sound artist</span><span class="zh">作曲 · 声音艺术</span></span><span><span class="en">Indiana, United States</span><span class="zh">美国 · 印第安纳</span></span></div>
+  <section class="section" id="work" aria-labelledby="work-heading">
+    <header class="section-heading">
+      <p class="section-label"><span aria-hidden="true">01</span><span class="en">Work</span><span class="zh">作品</span></p>
+      <h2 id="work-heading"><span class="en">Selected work</span><span class="zh">作品目录</span></h2>
+    </header>
+    <div class="work-list" id="work-list"></div>
+  </section>
+  <section class="section about" id="about" aria-labelledby="about-heading">
+    <header class="about-head">
+      <p class="section-label"><span aria-hidden="true">02</span><span class="en">About</span><span class="zh">关于</span></p>
+      <h2 id="about-heading">Feihong Yu</h2>
+      <span class="cn-name" lang="zh-CN">喻飞鸿</span>
+    </header>
+    <div class="bio">
+      <p><span class="en">Feihong Yu is a composer, performer, and singer. She is currently pursuing her Master’s degree in Classical Voice and Computer Music Composition at the Indiana University Jacobs School of Music, where she is expanding her artistic practice of opera performance and technology-based composition.</span><span class="zh">喻飞鸿是一位作曲家、表演者与歌者，目前在印第安纳大学雅各布斯音乐学院攻读古典声乐与计算机音乐作曲硕士，继续探索歌剧表演与以技术为媒介的作曲。</span></p>
+      <p><span class="en">Her creative work includes compositions for voice and live electronics, interactive dance works using posture-capture systems, and electroacoustic sound design. Her work has been performed at multiple conferences, including EMM, MOXsonic, SEAMUS, and Musicacoustica Hangzhou.</span><span class="zh">她的创作包括人声与现场电子音乐作品、运用姿态捕捉系统的互动舞蹈作品，以及电声设计。她的作品曾在 EMM、MOXsonic、SEAMUS 与 Musicacoustica 杭州等活动中呈现。</span></p>
+      <p><span class="en">Feihong previously earned her Bachelor’s degree in Classical Voice from the Manhattan School of Music. As a performer, she has sung leading roles in operas throughout Italy and Germany and appeared in concerts across New York City and her hometown of Dalian, China.</span><span class="zh">她在曼哈顿音乐学院获得古典声乐学士学位，曾在意大利和德国的歌剧制作中担任主要角色，也曾在纽约及家乡中国大连的音乐会上演出。</span></p>
+      <p><span class="en">In addition to her performance and compositional pursuits, she has extensive experience in music production, having worked as an audio technician specializing in recording, mixing, and mastering.</span><span class="zh">除了表演与作曲，她也有丰富的音乐制作经验，曾担任音频技术人员，从事录音、混音与母带制作。</span></p>
+      <div class="presentations">
+        <p><span class="en">Work presented at</span><span class="zh">作品曾亮相</span></p>
+        <ul><li>EMM</li><li>MOXsonic</li><li>SEAMUS</li><li>Musicacoustica Hangzhou</li></ul>
       </div>
     </div>
-  </header>
-
-  <h1 class="mark" aria-label="Feihong Yu">
-    <span class="ln fit" aria-hidden="true">Feihong Yu</span>
-  </h1>
-  <div class="strip mono">
-    <span><b>FIG. 1–4</b> <span class="en">Selected works</span><span class="zh">作品精选</span></span>
-    <span class="en">Sound · Light · Body · Interaction</span><span class="zh">声音 · 光 · 身体 · 交互</span>
-    <span>2024 — 26</span>
-  </div>
-
-  <main>
-    <aside id="about">
-      <p class="lede">
-        <span class="en">Media artist and interaction designer building rooms, objects and stages that listen back.</span>
-        <span class="zh">媒体艺术家与交互设计师，创作会“回应”观众的空间、物件与舞台。</span>
-      </p>
-      <div class="bio">
-        <p class="en">I'm Feihong Yu. I work where sound, light and the body meet: interactive installations, real-time visuals for performance, and small electronic objects you can hold. My projects move between Arduino and ESP32 hardware, Max and SuperCollider patches, and Unreal Engine scenes.</p>
-        <p class="en">I'm currently part of the KIX Lab community at Indiana University, collaborating with composers, psychologists and filmmakers.</p>
-        <p class="zh">我是喻飞鸿（Feihong Yu）。我的创作位于声音、光与身体的交汇处：互动装置、为表演设计的实时影像，以及可以握在手中的小型电子物件。我的项目在 Arduino 与 ESP32 硬件、Max 与 SuperCollider 程序、以及 Unreal Engine 场景之间穿梭。</p>
-        <p class="zh">目前我在印第安纳大学 KIX Lab 的创作社群中，与作曲家、心理学研究者和电影人合作。</p>
-      </div>
-      <dl class="facts mono">
-        <div><dt><span class="en">Practice</span><span class="zh">领域</span></dt><dd><span class="en">Installation, visuals, motion capture</span><span class="zh">装置、影像、动作捕捉</span></dd></div>
-        <div><dt><span class="en">Tools</span><span class="zh">工具</span></dt><dd>Unreal · Max · SuperCollider · Arduino · ESP32 · Fusion</dd></div>
-        <div><dt><span class="en">Based</span><span class="zh">所在</span></dt><dd><span class="en">Indiana, US</span><span class="zh">美国印第安纳</span></dd></div>
-      </dl>
-      <div id="contact" class="links mono">
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube ↗</a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
-        <span style="color:var(--mute)"><span class="en">Email — add yours</span><span class="zh">邮箱 — 待填写</span></span>
-      </div>
-    </aside>
-
-    <section class="works" id="work" aria-label="Works">
-      <h2 class="mono"><span><span class="en">Index of works</span><span class="zh">作品目录</span></span><span id="count"></span></h2>
-      <div class="grid" id="grid"></div>
-    </section>
-  </main>
-
-  <footer class="mono">
-    <span>© 2026 Feihong Yu</span>
-    <span class="en">Click any window to open the work.</span><span class="zh">点击任意窗口查看作品。</span>
-  </footer>
-</div>
-
-<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
-  <div class="window">
-    <div class="tbar mono"><span class="sq"><i></i><i></i><i></i></span><span class="fn" id="lb-fn"></span><button type="button" id="lb-close" class="mono">✕ <span class="en">Close</span><span class="zh">关闭</span></button></div>
-    <div class="body">
-      <div class="media" id="lb-media"></div>
-      <div class="info">
-        <div class="mono" id="lb-fig" style="color:var(--ultra)"></div>
-        <h3 id="lb-title"></h3>
-        <dl class="facts mono" id="lb-facts"></dl>
-        <p id="lb-desc"></p>
-      </div>
-    </div>
-  </div>
-</div>
-
+  </section>
+</main>
+<footer class="wrap"><span>© <span id="year">2026</span> Feihong Yu</span><a href="#top"><span class="en">Back to top</span><span class="zh">回到顶部</span><span aria-hidden="true"> ↑</span></a></footer>
 <script>
-/* ============================================================
-   EDIT YOUR WORKS HERE
-   - video:   path or URL of an .mp4/.webm you upload → plays inside the page
-   - youtube: the video ID (the part after watch?v=)
-   - art:     generative cover used until you add an image ("shadow" | "eeg" | "weather" | "gourd")
-   - cover:   optional image path/URL; replaces the generative cover
-   ============================================================ */
-const SITE = {
-  // YouTube players can't load inside a Claude artifact. Set to true when you host this page on your own domain.
-  embedYouTube: true
-};
+// Add recordings and images to each work using video, youtube, and cover.
 const WORKS = [
   {
     id:"kirillov", file:"kirillov_mini-opera.mov", art:"shadow", year:"2026",
@@ -272,172 +188,102 @@ const WORKS = [
   }
 ];
 
-/* ---------- language ---------- */
-let lang = "en";
-try{ const s = localStorage.getItem("fy-lang"); if(s==="zh"||s==="en") lang = s; }catch(e){}
-const bEn = document.getElementById("lang-en"), bZh = document.getElementById("lang-zh");
-function setLang(l){
-  lang = l; document.body.classList.toggle("zh", l==="zh");
-  document.documentElement.lang = l==="zh" ? "zh-CN" : "en";
-  bEn.setAttribute("aria-pressed", l==="en"); bZh.setAttribute("aria-pressed", l==="zh");
-  try{ localStorage.setItem("fy-lang", l); }catch(e){}
+const workList = document.getElementById('work-list');
+function bilingual(copy) {
+  const fragment = document.createDocumentFragment();
+  for (const language of ['en', 'zh']) {
+    const span = document.createElement('span');
+    span.className = language;
+    span.textContent = copy[language];
+    fragment.append(span);
+  }
+  return fragment;
 }
-bEn.onclick = ()=>setLang("en"); bZh.onclick = ()=>setLang("zh");
-setLang(lang);
-
-/* ---------- clock ---------- */
-const clockEl = document.getElementById("clock");
-function tick(){
-  try{
-    const t = new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"America/Indiana/Indianapolis"}).format(new Date());
-    clockEl.textContent = "Indiana " + t;
-  }catch(e){}
+function appendCopy(parent, tag, copy, className = '') {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.append(bilingual(copy));
+  parent.append(element);
+  return element;
 }
-tick(); setInterval(tick, 20000);
-
-/* ---------- fit wordmark to width ---------- */
-function fit(){
-  const host = document.querySelector(".mark");
-  const W = host.clientWidth;
-  document.querySelectorAll(".fit").forEach(el=>{
-    el.style.fontSize = "100px"; el.style.display = "inline-block";
-    const w = el.scrollWidth; el.style.display = "";
-    if(w) el.style.fontSize = Math.min(100 * W / w * 0.995, 340) + "px";
+for (const work of WORKS) {
+  const entry = document.createElement('details');
+  entry.className = 'work';
+  entry.id = 'work-' + work.id;
+  const summary = document.createElement('summary');
+  const heading = document.createElement('span');
+  appendCopy(heading, 'span', work.title, 'work-title');
+  appendCopy(heading, 'span', work.sub, 'work-sub');
+  const year = document.createElement('span');
+  year.className = 'work-year';
+  year.textContent = work.year;
+  const toggle = document.createElement('span');
+  toggle.className = 'work-toggle';
+  toggle.setAttribute('aria-hidden', 'true');
+  summary.append(heading, year, toggle);
+  const body = document.createElement('div');
+  body.className = 'work-body';
+  appendCopy(body, 'p', work.desc);
+  const facts = document.createElement('dl');
+  facts.className = 'work-facts';
+  for (const [label, value] of [
+    [{en:'Role',zh:'职责'}, work.role],
+    [{en:'Tools',zh:'工具'}, {en:work.tools,zh:work.tools}],
+    [{en:'Status',zh:'状态'}, work.status]
+  ]) {
+    appendCopy(facts, 'dt', label);
+    appendCopy(facts, 'dd', value);
+  }
+  body.append(facts);
+  if (work.cover) {
+    const image = document.createElement('img');
+    image.className = 'work-media';
+    image.src = work.cover;
+    image.alt = '';
+    image.loading = 'lazy';
+    body.append(image);
+  }
+  if (work.video) {
+    const video = document.createElement('video');
+    video.className = 'work-media';
+    video.src = work.video;
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = 'none';
+    if (work.cover) video.poster = work.cover;
+    body.append(video);
+  } else if (work.youtube) {
+    const frame = document.createElement('iframe');
+    frame.className = 'work-media';
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(work.youtube);
+    frame.title = work.title.en;
+    frame.loading = 'lazy';
+    frame.allow = 'encrypted-media; picture-in-picture';
+    frame.allowFullscreen = true;
+    body.append(frame);
+  }
+  entry.append(summary, body);
+  entry.addEventListener('toggle', () => {
+    if (!entry.open) for (const video of entry.querySelectorAll('video')) video.pause();
   });
+  workList.append(entry);
 }
-fit();
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-new ResizeObserver(fit).observe(document.querySelector(".mark"));
-
-/* ---------- generative plates ---------- */
-const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-function draw(cv, kind, t){
-  const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2);
-  const W = Math.max(1, r.width), H = Math.max(1, r.height);
-  if(cv.width !== Math.round(W*dpr)){ cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); }
-  const c = cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0);
-  const ink=css("--ink"), ultra=css("--ultra"), rose=css("--rose"), amber=css("--amber"), win=css("--win"), line=css("--line");
-  c.fillStyle = win; c.fillRect(0,0,W,H);
-  // registration grid
-  c.strokeStyle = line; c.lineWidth = 1;
-  for(let x=W/8; x<W; x+=W/8){ c.beginPath(); c.moveTo(x,0); c.lineTo(x,H); c.stroke(); }
-  for(let y=H/6; y<H; y+=H/6){ c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke(); }
-  const cx=W/2, cy=H/2;
-  if(kind==="shadow"){
-    c.fillStyle = ultra; c.globalAlpha=.85;
-    const sx = Math.sin(t*1.3)*W*.04;
-    // shadow — stretched, offset
-    c.save(); c.translate(cx+W*.12+sx, cy+H*.02); c.transform(1,0,-.5,1,0,0); figure(c,H*.62,ultra); c.restore();
-    c.globalAlpha=1; c.save(); c.translate(cx-W*.1, cy); figure(c,H*.6,ink); c.restore();
-    c.strokeStyle=ink; c.beginPath(); c.moveTo(W*.06,cy+H*.3); c.lineTo(W*.94,cy+H*.3); c.stroke();
-  }
-  if(kind==="eeg"){
-    for(let k=0;k<5;k++){ c.strokeStyle = k===2?ultra:ink; c.globalAlpha = k===2?1:.55; c.lineWidth = k===2?2:1;
-      c.beginPath(); c.arc(cx,cy,H*(.08+k*.085),0,Math.PI*2); c.stroke(); }
-    c.globalAlpha=1;
-    for(let b=0;b<4;b++){
-      const y0 = H*(.2+b*.2), f=[.03,.06,.11,.18][b], a=[10,7,5,3][b];
-      c.strokeStyle = b===1?rose:ink; c.lineWidth = b===1?2:1.2; c.beginPath();
-      for(let x=0;x<=W;x+=2){ const y=y0+Math.sin(x*f+t*(1+b))*a+Math.sin(x*f*2.7+t*2)*a*.4; x?c.lineTo(x,y):c.moveTo(x,y); }
-      c.stroke();
-    }
-  }
-  if(kind==="weather"){
-    c.globalCompositeOperation = "multiply";
-    const R=H*.26, o=Math.sin(t)*R*.15;
-    c.fillStyle=amber; c.beginPath(); c.arc(cx-R*.55-o,cy-R*.25,R,0,7); c.fill();
-    c.fillStyle=ultra; c.globalAlpha=.75; c.beginPath(); c.arc(cx+R*.55+o,cy-R*.25,R,0,7); c.fill();
-    c.fillStyle=rose; c.globalAlpha=.8; c.beginPath(); c.arc(cx,cy+R*.5,R,0,7); c.fill();
-    c.globalAlpha=1; c.globalCompositeOperation="source-over";
-    c.strokeStyle=ink; c.lineWidth=1.4;
-    for(let i=0;i<9;i++){ const x=W*.12+i*W*.035, y=H*.72+((t*30+i*13)%30); c.beginPath(); c.moveTo(x,y); c.lineTo(x-4,y+10); c.stroke(); }
-  }
-  if(kind==="gourd"){
-    const pts=[]; const s=H*.36;
-    for(let a=0;a<Math.PI*2;a+=.04){
-      const y=Math.sin(a), x=Math.cos(a);
-      const w = (y<0? .55+.25*Math.cos((y+1)*Math.PI) : 1) ; // narrow top bulb
-      const top = y<0 ? s*.9 : s;
-      pts.push([cx + x*s*.62*(y<0?.62:1), cy + y*top*(y<0?1.05:.8) + (y<0?-s*.15:s*.15)]);
-    }
-    for(let k=0;k<6;k++){ c.strokeStyle = k===0?ink:line; c.lineWidth=k===0?1.6:1; c.beginPath();
-      pts.forEach((p,i)=>{ const q=[cx+(p[0]-cx)*(1-k*.12), cy+(p[1]-cy)*(1-k*.12)]; i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]); });
-      c.closePath(); c.stroke(); }
-    pts.forEach((p,i)=>{ if(i%6) return; const on = (Math.sin(i*.3 - t*3)+1)/2;
-      c.fillStyle = on>.6? ultra : ink; c.globalAlpha = .35+on*.65; c.beginPath(); c.arc(p[0],p[1],2.6,0,7); c.fill(); });
-    c.globalAlpha=1; c.strokeStyle=ink; c.beginPath(); c.moveTo(cx,cy-s*1.18); c.lineTo(cx+6,cy-s*1.32); c.stroke();
-  }
-  c.globalAlpha=1;
+let language = 'en';
+try {
+  const saved = localStorage.getItem('fy-lang');
+  if (saved === 'zh' || saved === 'en') language = saved;
+} catch {}
+function setLanguage(next) {
+  language = next;
+  document.body.classList.toggle('zh', next === 'zh');
+  document.documentElement.lang = next === 'zh' ? 'zh-CN' : 'en';
+  for (const code of ['en', 'zh']) document.getElementById('lang-' + code).setAttribute('aria-pressed', String(code === next));
+  try { localStorage.setItem('fy-lang', next); } catch {}
 }
-function figure(c,h,col){ // simple standing body
-  c.fillStyle=col; c.beginPath(); c.arc(0,-h*.42,h*.07,0,7); c.fill();
-  c.beginPath(); c.moveTo(-h*.09,-h*.32); c.lineTo(h*.09,-h*.32); c.lineTo(h*.13,h*.05); c.lineTo(h*.05,h*.05);
-  c.lineTo(h*.06,h*.3); c.lineTo(-h*.06,h*.3); c.lineTo(-h*.05,h*.05); c.lineTo(-h*.13,h*.05); c.closePath(); c.fill();
-}
-
-/* ---------- render grid ---------- */
-const grid = document.getElementById("grid");
-document.getElementById("count").textContent = String(WORKS.length).padStart(2,"0") + " / " + String(WORKS.length).padStart(2,"0");
-const plates = [];
-const L = o => `<span class="en">${o.en}</span><span class="zh">${o.zh}</span>`;
-WORKS.forEach((w,i)=>{
-  const n = String(i+1).padStart(2,"0");
-  const b = document.createElement("button");
-  b.className="card"; b.type="button"; b.id="work-"+w.id;
-  const playable = w.video || w.youtube;
-  b.innerHTML = `<div class="window">
-      <div class="tbar mono"><span class="sq"><i></i><i></i><i></i></span><span class="fn">${w.file}</span></div>
-      <div class="plate">${w.cover?`<img src="${w.cover}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<canvas></canvas>`}
-        ${playable?`<span class="play mono">▶ ${w.video?"Play":"YouTube"}</span>`:""}</div>
-    </div>
-    <div class="cap mono"><span class="fig">FIG. ${i+1}</span><span class="t" style="font-family:var(--f-body);text-transform:none;letter-spacing:0">${L(w.title)}</span><span class="y">${w.year}</span></div>
-    <div class="sub">${L(w.sub)}</div>`;
-  b.onclick = ()=>openWork(i);
-  grid.appendChild(b);
-  const cv = b.querySelector("canvas");
-  if(cv){ const p={cv,kind:w.art,t:i*.7,live:false}; plates.push(p);
-    b.addEventListener("mouseenter",()=>p.live=true); b.addEventListener("mouseleave",()=>p.live=false);
-    b.addEventListener("focus",()=>p.live=true); b.addEventListener("blur",()=>p.live=false); }
-});
-function loop(){ plates.forEach(p=>{ if(p.live && !reduce) p.t += .025; draw(p.cv,p.kind,p.t); }); requestAnimationFrame(loop); }
-requestAnimationFrame(loop);
-
-/* ---------- lightbox ---------- */
-const lb=document.getElementById("lb"), media=document.getElementById("lb-media");
-let lbPlate=null, lastFocus=null;
-function openWork(i){
-  const w = WORKS[i]; lastFocus = document.activeElement;
-  document.getElementById("lb-fn").textContent = w.file;
-  document.getElementById("lb-fig").textContent = "FIG. " + (i+1) + " — " + w.year;
-  document.getElementById("lb-title").innerHTML = L(w.title);
-  document.getElementById("lb-desc").innerHTML = L(w.desc);
-  document.getElementById("lb-facts").innerHTML =
-    `<div><dt>${L({en:"Role",zh:"职责"})}</dt><dd>${L(w.role)}</dd></div>
-     <div><dt>${L({en:"Tools",zh:"工具"})}</dt><dd>${w.tools}</dd></div>
-     <div><dt>${L({en:"Status",zh:"状态"})}</dt><dd>${L(w.status)}</dd></div>`;
-  lbPlate=null;
-  if(w.video){
-    media.innerHTML = `<video src="${w.video}" controls playsinline preload="metadata" ${w.cover?`poster="${w.cover}"`:""}></video>`;
-  }else if(w.youtube && SITE.embedYouTube){
-    media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${w.youtube}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${w.title.en}"></iframe>`;
-  }else{
-    media.innerHTML = `<canvas></canvas><div class="note mono">${
-      w.youtube ? `<a href="https://www.youtube.com/watch?v=${w.youtube}" target="_blank" rel="noopener">▶ ${L({en:"Watch on YouTube",zh:"在 YouTube 观看"})} ↗</a>`
-                : `<span>${L({en:"Video coming soon",zh:"影像即将上传"})}</span>`}</div>`;
-    lbPlate = {cv:media.querySelector("canvas"), kind:w.art, t:0, live:true}; plates.push(lbPlate);
-  }
-  lb.hidden=false; document.getElementById("lb-close").focus();
-}
-function closeLb(){
-  lb.hidden=true; const v=media.querySelector("video"); if(v) v.pause();
-  if(lbPlate){ plates.splice(plates.indexOf(lbPlate),1); lbPlate=null; }
-  media.innerHTML=""; if(lastFocus) lastFocus.focus();
-}
-document.getElementById("lb-close").onclick=closeLb;
-lb.addEventListener("click",e=>{ if(e.target===lb) closeLb(); });
-addEventListener("keydown",e=>{ if(e.key==="Escape" && !lb.hidden) closeLb(); });
+document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
+setLanguage(language);
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
