@@ -163,6 +163,9 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(min-width:581px){.hero-copy{width:54%}.hero-copy h1{font-size:clamp(80px,8.75vw,116px);white-space:nowrap}}
 @media(min-width:581px) and (max-width:900px){.hero-copy{width:55%}.hero-copy h1{font-size:clamp(54px,8.75vw,80px)}}
 @media(max-width:580px){.hero-copy h1{font-size:clamp(51px,14.1vw,78px);white-space:nowrap}.hero-copy .eyebrow{font-size:10px}.hero-copy .small-link{font-size:12px;padding:9px 16px}.hero-copy .cn-name{font-size:12px}}
+
+.wave-divider{margin-top:24px}
+@media(max-width:580px){.wave-divider{margin-top:18px}}
 </style>
 </head>
 <body id="top">
@@ -485,18 +488,28 @@ document.getElementById('year').textContent = new Date().getFullYear();
     varying float v_distance;
     varying float v_highlight;
     ${flowSource}
+    float amplitudeNoise(float value) {
+      float cell=floor(value), blend=fract(value);
+      blend=blend*blend*(3.0-2.0*blend);
+      float first=fract(sin(cell*127.1+311.7)*43758.5453);
+      float second=fract(sin((cell+1.0)*127.1+311.7)*43758.5453);
+      return mix(first,second,blend);
+    }
     void main() {
       float s = a_position.x;
       float thread = a_position.y;
       float phase = s*6.2831853*5.5-u_time*1.2+thread*.24;
       float envelope = pow(sin(s*3.14159265),1.3);
+      float packet=amplitudeNoise(s*8.0-u_time*.45+41.0+thread*.18);
+      float intensity=amplitudeNoise(u_time*.32+8.0+thread*.12);
+      float amplitude=(.32+.95*packet)*(.60+.55*intensity);
       vec3 point = vec3(
         (s-.5)*5.9,
-        .08+(1.10-thread*.13)*(sin(phase)+.18*sin(phase*2.0+thread*.2))*envelope+(thread-1.0)*.035,
+        .08+(1.10-thread*.13)*amplitude*(sin(phase)+.18*sin(phase*2.0+thread*.2))*envelope+(thread-1.0)*.035,
         cos(phase)*.20*envelope
       );
       vec2 projected = projectFlow(point);
-      projected.x *= max(1.0,u_aspect/1.8);
+      projected.x *= max(1.0,u_aspect/1.5);
       vec2 pointerDelta = projected-u_pointer.xy;
       pointerDelta.x *= u_aspect;
       float nearby = exp(-dot(pointerDelta,pointerDelta)*4.0)*min(u_pointer.z,1.0);
@@ -741,9 +754,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
       for (let step=0;step<=150;step++) {
         const s=step/150;
         const phase=s*Math.PI*2*5.5-time*1.2+thread*.24;
+        const packet=amplitudeNoise(s*8-time*.45+41+thread*.18);
+        const intensity=amplitudeNoise(time*.32+8+thread*.12);
+        const amplitude=(.32+.95*packet)*(.60+.55*intensity);
         const x=(s-.5)*5.9;
-        const y=.08+(1.10-thread*.13)*(Math.sin(phase)+.18*Math.sin(phase*2+thread*.2))*Math.pow(Math.sin(s*Math.PI),1.3)+(thread-1)*.035;
-        const px=width*.5+x*2.35/5.1*fit*height*.5*Math.max(1,width/height/1.8);
+        const y=.08+(1.10-thread*.13)*amplitude*(Math.sin(phase)+.18*Math.sin(phase*2+thread*.2))*Math.pow(Math.sin(s*Math.PI),1.3)+(thread-1)*.035;
+        const px=width*.5+x*2.35/5.1*fit*height*.5*Math.max(1,width/height/1.5);
         const py=height*.5-(y*2.35/5.1*fit+(1-fit)*.26)*height*.5;
         if (step===0) fallback.moveTo(px,py); else fallback.lineTo(px,py);
       }
@@ -756,6 +772,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
       const p=point(.12+life*1.08,seeds[index*4+1]*1.25,0);
       fallback.fillRect(p[0],p[1],1,1);
     }
+  }
+  function amplitudeNoise(value) {
+    const cell=Math.floor(value), fraction=value-cell;
+    const blend=fraction*fraction*(3-2*fraction);
+    const first=Math.sin(cell*127.1+311.7)*43758.5453;
+    const second=Math.sin((cell+1)*127.1+311.7)*43758.5453;
+    return (first-Math.floor(first))*(1-blend)+(second-Math.floor(second))*blend;
   }
   function resize() {
     const bounds = stage.getBoundingClientRect();
