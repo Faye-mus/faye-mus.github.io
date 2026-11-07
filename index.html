@@ -210,23 +210,23 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .work-cover-title{font:400 clamp(25px,2.5vw,36px)/1.25 var(--mono);letter-spacing:-.04em;overflow-wrap:anywhere}
 .work-cover-meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font:11px/1.5 var(--mono);color:#b7b7b7}
 .work-cover-meta>span:last-child{margin-left:auto;font-size:19px}
-body.work-modal-open{overflow:hidden}
-.work-detail{color:var(--ink);background:#363636;border:1px solid #626262;border-radius:9px;width:min(760px,calc(100vw - 40px));max-height:calc(100dvh - 48px);padding:0;overscroll-behavior:contain;box-shadow:0 24px 100px #0006}
-.work-detail::backdrop{background:#171717d9;backdrop-filter:blur(7px)}
-.work-detail-shell{padding:24px 34px 34px}
-.work-detail-bar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:23px;margin-bottom:26px;border-bottom:1px solid var(--line)}
-.work-detail-label{font:10px/1.5 var(--mono);color:var(--muted)}
-.work-detail-close{border:0;background:none;cursor:pointer;padding:7px 0 7px 16px;font:11px/1.5 var(--mono)}
-.work-detail-close:hover{color:#e0e0e0}
-.work-detail-title{font:400 clamp(30px,4vw,48px)/1.2 var(--mono);letter-spacing:-.045em;overflow-wrap:anywhere}
-.work-detail-title:focus{outline:none}
-.work-detail-year{font:11px/1.5 var(--mono);color:var(--muted);margin-top:12px}
-.work-detail-description{max-width:660px;margin-top:28px;font:13px/1.9 var(--mono);white-space:pre-line;color:#bcbcbc}
-.work-player{margin-top:30px;max-width:640px}
+
 .work-video{display:block;width:100%;aspect-ratio:16/9;background:#222;border:0;border-radius:4px}
 .work-audio{display:block;width:100%;height:54px;color-scheme:dark}
 .work-player-link{display:inline-block;margin-top:13px;font:10px/1.6 var(--mono);color:var(--muted);text-decoration:underline;text-underline-offset:4px}
-@media(max-width:580px){.work-cover{aspect-ratio:3/4}.work-cover-caption{inset-inline:22px;bottom:21px}.work-cover-title{font-size:30px}.work-detail{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}.work-detail-shell{padding:16px 20px 24px}.work-detail-bar{margin-bottom:22px;padding-bottom:15px}.work-detail-description{font-size:12px}.work-player{margin-top:25px}}
+@media(max-width:580px){.work-cover-caption{inset-inline:22px;bottom:21px}.work-cover-title{font-size:30px}}
+
+/* Each work has its own full page and a normal document flow. */
+.piece-page{min-height:100svh;display:flex;flex-direction:column}
+.piece-main{width:min(980px,calc(100% - 80px));margin-inline:auto;flex:1;padding:36px 0 75px}
+.piece-back{display:inline-block;font:11px/1.6 var(--mono);color:var(--muted);margin-bottom:38px}
+.piece-back:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.piece-title{font:400 clamp(52px,7.5vw,96px)/1.12 var(--mono);letter-spacing:-.06em;margin:0;overflow-wrap:anywhere}
+.piece-year{font:12px/1.6 var(--mono);color:var(--muted);margin-top:14px}
+.piece-description{max-width:740px;margin-top:34px;font:13px/1.95 var(--mono);white-space:pre-line;color:#bcbcbc}
+.piece-player{max-width:760px;margin-top:42px}
+.piece-page footer{width:min(980px,calc(100% - 80px));margin-inline:auto}
+@media(max-width:580px){.piece-main{width:calc(100% - 32px);padding-top:25px;padding-bottom:52px}.piece-back{margin-bottom:30px}.piece-title{font-size:54px}.piece-year{font-size:11px}.piece-description{font-size:12px;margin-top:26px}.piece-player{margin-top:32px}.piece-page footer{width:calc(100% - 32px)}}
 </style>
 </head>
 <body id="top">
@@ -332,137 +332,11 @@ function appendCopy(parent, tag, copy, className = '') {
   parent.append(element);
   return element;
 }
-// Cover cards open a single accessible detail view. Media loads only on opening.
-const workDialog = document.createElement('dialog');
-workDialog.className = 'work-detail';
-workDialog.id = 'work-detail';
-workDialog.setAttribute('aria-labelledby', 'work-detail-title');
-const dialogShell = document.createElement('div');
-dialogShell.className = 'work-detail-shell';
-const dialogBar = document.createElement('div');
-dialogBar.className = 'work-detail-bar';
-appendCopy(dialogBar, 'p', {en:'Work',zh:'作品'}, 'work-detail-label');
-const closeWorkButton = document.createElement('button');
-closeWorkButton.type = 'button';
-closeWorkButton.className = 'work-detail-close';
-closeWorkButton.append(bilingual({en:'Close',zh:'关闭'}), document.createTextNode(' ×'));
-dialogBar.append(closeWorkButton);
-const detailContent = document.createElement('div');
-detailContent.className = 'work-detail-content';
-dialogShell.append(dialogBar, detailContent);
-workDialog.append(dialogShell);
-document.body.append(workDialog);
-let openedWorkId = null;
-let workTrigger = null;
-
-function youTubeId(value) {
-  if (/^[\w-]{11}$/.test(value)) return value;
-  try {
-    const url = new URL(value);
-    const host = url.hostname.replace(/^www\./, '');
-    let id = null;
-    if (host === 'youtu.be') id = url.pathname.split('/')[1];
-    else if (['youtube.com','m.youtube.com','youtube-nocookie.com'].includes(host)) {
-      id = url.searchParams.get('v');
-      if (!id && /^\/(embed|shorts|live)\//.test(url.pathname)) id = url.pathname.split('/')[2];
-    }
-    return /^[\w-]{11}$/.test(id || '') ? id : null;
-  } catch { return null; }
-}
-function stopWorkMedia() {
-  for (const media of detailContent.querySelectorAll('audio,video')) media.pause();
-  for (const frame of detailContent.querySelectorAll('iframe')) frame.src = 'about:blank';
-  detailContent.replaceChildren();
-}
-function showWork(work) {
-  if (workDialog.open && openedWorkId === work.id) return;
-  stopWorkMedia();
-  openedWorkId = work.id;
-  const heading = appendCopy(detailContent, 'h2', work.title, 'work-detail-title');
-  heading.id = 'work-detail-title';
-  heading.tabIndex = -1;
-  if (work.year) {
-    const year = document.createElement('p');
-    year.className = 'work-detail-year';
-    year.textContent = work.year;
-    detailContent.append(year);
-  }
-  const description = work.description;
-  if (typeof description === 'string' ? description.trim() : description && (description.en || description.zh)) {
-    appendCopy(detailContent, 'div', description, 'work-detail-description');
-  }
-  const source = work.media;
-  if (source && source.src) {
-    const player = document.createElement('div');
-    player.className = 'work-player';
-    const title = typeof work.title === 'string' ? work.title : (work.title.en || work.title.zh);
-    const id = source.type === 'youtube' ? youTubeId(source.src) : null;
-    if (id) {
-      const frame = document.createElement('iframe');
-      frame.className = 'work-video';
-      frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0';
-      frame.title = title + ' — YouTube';
-      frame.referrerPolicy = 'strict-origin-when-cross-origin';
-      frame.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
-      frame.allowFullscreen = true;
-      player.append(frame);
-      const link = document.createElement('a');
-      link.className = 'work-player-link';
-      link.href = 'https://www.youtube.com/watch?v=' + id;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.append(bilingual({en:'Open on YouTube ↗',zh:'在 YouTube 打开 ↗'}));
-      player.append(link);
-    } else if (source.type === 'audio' || source.type === 'video') {
-      const media = document.createElement(source.type);
-      media.src = source.src;
-      media.controls = true;
-      media.preload = 'none';
-      media.setAttribute('aria-label', title);
-      media.className = source.type === 'audio' ? 'work-audio' : 'work-video';
-      if (source.type === 'video') media.playsInline = true;
-      player.append(media);
-    }
-    if (player.childElementCount) detailContent.append(player);
-  }
-  document.body.classList.add('work-modal-open');
-  if (!workDialog.open) workDialog.showModal();
-  heading.focus({preventScroll:true});
-}
-function closeWork() {
-  if (!workDialog.open) return;
-  const pushed = history.state && history.state.portfolioWork === openedWorkId;
-  workDialog.close();
-  if (pushed) history.back();
-  else {
-    history.replaceState(null, '', '#work');
-    document.getElementById('work').scrollIntoView({block:'start'});
-  }
-}
-function syncWorkHash() {
-  const work = WORKS.find(item => location.hash === '#work-' + item.id);
-  if (work) showWork(work);
-  else if (workDialog.open) workDialog.close();
-}
-closeWorkButton.addEventListener('click', closeWork);
-workDialog.addEventListener('cancel', event => {event.preventDefault();closeWork();});
-workDialog.addEventListener('click', event => {
-  if (event.target !== workDialog) return;
-  const box = workDialog.getBoundingClientRect();
-  if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeWork();
-});
-workDialog.addEventListener('close', () => {
-  stopWorkMedia();
-  openedWorkId = null;
-  document.body.classList.remove('work-modal-open');
-  if (workTrigger) workTrigger.focus({preventScroll:true});
-});
 for (const work of WORKS) {
   const card = document.createElement('a');
   card.className = 'work-card';
-  card.href = '#work-' + work.id;
+  card.href = 'works/' + encodeURIComponent(work.id) + '/';
   card.id = 'work-card-' + work.id;
-  card.setAttribute('aria-haspopup', 'dialog');
   const cover = document.createElement('figure');
   cover.className = 'work-cover';
   if (work.cover) {
@@ -490,18 +364,12 @@ for (const work of WORKS) {
   caption.append(meta);
   cover.append(caption);
   card.append(cover);
-  card.addEventListener('click', event => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    workTrigger = card;
-    if (location.hash !== card.hash) history.pushState({portfolioWork:work.id}, '', card.hash);
-    showWork(work);
-  });
   workList.append(card);
 }
-window.addEventListener('popstate', syncWorkHash);
-window.addEventListener('hashchange', syncWorkHash);
-queueMicrotask(syncWorkHash);
+
+// Keep previously shared work links working with the new full pages.
+const legacyWork = WORKS.find(work => location.hash === '#work-' + work.id);
+if (legacyWork) location.replace('works/' + encodeURIComponent(legacyWork.id) + '/');
 
 let language = 'en';
 try {
