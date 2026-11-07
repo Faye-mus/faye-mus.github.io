@@ -84,17 +84,25 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(max-width:580px){h1{font-size:clamp(43px,12.1vw,66px);letter-spacing:-.065em}.works-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px}.works-heading .section-label{padding-bottom:5px}.work-list{grid-template-columns:1fr;gap:10px}.work-placeholder{height:250px}.about-head h2{font-size:24px}.bio p{font-size:12px}}
 
 
-.hero-visuals{position:absolute;inset:0 0 220px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:clamp(35px,5.5vw,80px);pointer-events:none}
-.hero-visuals .hero-art{position:relative;inset:auto;grid-column:1;grid-row:1;min-width:0;pointer-events:auto}
-.hero-visuals .hero-art figcaption{left:0;top:22px;font-size:8px}
-.hero-visuals .ink-controls{right:0;top:15px;font-size:8px;gap:15px}
-.hero-portrait{position:relative;grid-column:2;grid-row:1;width:100%;height:100%;min-width:0;min-height:0;pointer-events:none;mix-blend-mode:lighten}
-.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:grayscale(1) brightness(.92) contrast(1.1);opacity:.88;mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%)}
-@media(max-width:900px) and (min-width:581px){.hero-visuals{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:30px;bottom:235px}.hero-visuals .ink-controls{gap:10px}.hero-visuals .hero-art figcaption{top:56px}}
-@media(max-width:580px){.hero{height:auto;min-height:0;display:flex;flex-direction:column;align-items:stretch;padding-bottom:37px}.hero-copy{order:2}.hero-visuals{order:1;position:relative;inset:auto;display:flex;flex-direction:column;gap:20px;margin:20px 0 34px}.hero-portrait{width:min(100%,300px);height:260px;align-self:center}.hero-visuals .hero-art{width:100%;height:180px;flex:none}.hero-visuals .hero-art figcaption{top:0;left:0}.hero-visuals .ink-controls{top:-7px;right:0;gap:13px}.hero-visuals .ink-stage{inset:23px 0 0}.hero-portrait img{opacity:.9}}
-
-.portrait-light-stage{position:absolute;inset:0;z-index:1;pointer-events:auto;touch-action:pan-y;cursor:grab;mix-blend-mode:screen;mask-image:linear-gradient(transparent,#000 13%,#000 78%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 13%,#000 78%,transparent);outline-offset:-6px}
+/* Name and portrait share one horizontal composition. */
+.hero{min-height:640px;align-items:center;padding:0 0 12px}
+.hero-copy{display:block;width:49%;padding-bottom:18px}
+.hero-copy .eyebrow{font-size:9px}
+.hero-copy h1{font-size:clamp(64px,7vw,92px);margin:19px 0 15px}
+.hero-copy .intro{max-width:365px;margin:25px 0 0;font-size:11px;line-height:1.9}
+.hero-copy .small-link{margin-top:24px}
+.hero-visuals{display:contents;pointer-events:none}
+.hero-portrait{position:absolute;right:-2%;top:-18px;width:54%;height:100%;min-width:0;min-height:0;pointer-events:none;mix-blend-mode:lighten}
+.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:grayscale(1) brightness(.92) contrast(1.1);opacity:.9;mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%)}
+.hero-visuals .hero-art{position:absolute;inset:auto;left:0;bottom:16px;width:46%;height:118px;min-width:0;pointer-events:auto}
+.hero-visuals .hero-art figcaption{left:0;top:0;font-size:8px}
+.hero-visuals .ink-controls{right:0;top:-7px;font-size:8px;gap:15px}
+.hero-visuals .ink-stage{inset:24px 0 0}
+.portrait-light-stage{position:absolute;inset:0;z-index:1;pointer-events:auto;touch-action:pan-y;cursor:grab;mix-blend-mode:screen;mask-image:radial-gradient(ellipse 60% 50% at 46% 50%,#000 32%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 46% 50%,#000 32%,transparent 96%);outline-offset:-6px}
 .portrait-light-stage:active{cursor:grabbing}.portrait-light-stage canvas{display:block;width:100%;height:100%;pointer-events:none}
+@media(min-width:581px) and (max-width:900px){.hero{min-height:600px}.hero-copy{width:51%}.hero-copy h1{font-size:clamp(49px,7.1vw,64px)}.hero-copy .intro{font-size:10px;max-width:285px}.hero-portrait{width:54%;right:-4%}.hero-visuals #ink-hint{display:none}}
+@media(max-width:580px){.hero{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);padding:12px 0 30px}.hero-copy{grid-column:1;grid-row:2;order:initial;width:100%;padding:0;margin-top:-24px}.hero-copy h1{font-size:clamp(43px,12.1vw,66px);margin:14px 0}.hero-copy .eyebrow{font-size:8px}.hero-copy .intro{font-size:10px;margin-top:19px;max-width:310px}.hero-copy .small-link{margin-top:21px}.hero-portrait{position:relative;grid-column:1;grid-row:1;inset:auto;width:100%;max-width:430px;height:350px;justify-self:center}.hero-visuals .hero-art{position:relative;grid-column:1;grid-row:3;inset:auto;width:100%;height:112px;margin-top:35px}.hero-visuals .ink-controls{gap:13px}.hero-portrait img{opacity:.92}}
+@media(max-width:360px){.hero-visuals #ink-hint{display:none}.hero-portrait{height:310px}}
 </style>
 </head>
 <body id="top">
@@ -297,7 +305,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   let canvas = document.getElementById(canvasId);
   const textureImage = document.getElementById('ink-texture');
   const pointer = {x:0, y:0, targetX:0, targetY:0, strength:0, targetStrength:0};
-  const count = kind === 'beam' ? (innerWidth < 600 ? 260 : 450) : 0;
+  const count = kind === 'beam' ? (innerWidth < 600 ? 160 : 300) : 0;
   const seeds = new Float32Array(count * 4);
   let randomState = 17819;
   function random() {
@@ -317,12 +325,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
     uniform vec3 u_pointer;
     uniform float u_pulse;
     vec3 flowPoint(float u, float v, float sheet, float thickness) {
-      float drift = u_time*.18;
-      float spread = .27+.65*(1.0-u);
       vec3 point = vec3(
-        -1.00+.90*u+.08*sin(drift+u*2.2)+v*spread,
-        (u-.5)*4.7+.20,
-        .025*sin(u*3.0+drift)+thickness
+        -.68+.20*u+v*1.55,
+        (u-.5)*5.2+.15,
+        thickness
       );
       return point;
     }
@@ -390,22 +396,31 @@ document.getElementById('year').textContent = new Date().getFullYear();
     }
   `;
   const inkFragmentSource = `
-    precision mediump float;
+    precision highp float;
     uniform sampler2D u_image;
     varying vec2 v_uv;
     varying float v_light;
     varying float v_phase;
+    float hash(vec2 p) {
+      return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);
+    }
+    float mist(vec2 p) {
+      vec2 i=floor(p), f=fract(p);
+      f=f*f*(3.0-2.0*f);
+      return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),f.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),f.x),f.y);
+    }
     void main() {
-      vec4 pigment = texture2D(u_image,v_uv);
-      float ink = pigment.a*(1.0-dot(pigment.rgb,vec3(.299,.587,.114)));
-      float ends = smoothstep(.0,.17,v_uv.x)*(1.0-smoothstep(.88,1.0,v_uv.x));
-      float crossflow = (v_uv.y-.5)*2.0+.10*sin(v_uv.x*3.0-v_phase);
-      float feather = exp(-crossflow*crossflow*4.6);
-      float drift = .88+.12*sin(v_uv.y*5.0+v_phase);
-      float opacity = ends*feather*drift*(.21+.035*ink);
-      gl_FragColor = vec4(vec3(.73),opacity);
+      float ends = smoothstep(.0,.2,v_uv.x)*(1.0-smoothstep(.82,1.0,v_uv.x));
+      float sweep = .22*sin(v_phase*.55);
+      float lane = (v_uv.y-.5)*2.0+(v_uv.x-.5)*.5*sin(v_phase*.37)+sweep;
+      float feather = exp(-lane*lane*2.2);
+      vec2 drift = vec2(v_phase*.13,-v_phase*.18);
+      float atmosphere = .77+.15*mist(v_uv*vec2(4.0,3.0)+drift)+.08*mist(v_uv*7.0-drift);
+      float breathing = .86+.14*sin(v_phase*.7);
+      gl_FragColor = vec4(vec3(.72),ends*feather*atmosphere*breathing*.155);
     }
   `;
+
   const lineVertexSource = `
     attribute vec2 a_position;
     varying float v_depth;
@@ -422,7 +437,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
         .64+sin(phase)*.48*envelope+(s-.5)*(.55-thread*.5),
         cos(phase)*.72*envelope
       );
-      gl_Position = vec4(projectFlow(point),0.0,1.0);
+      vec2 projected = projectFlow(point);
+      projected.x *= max(1.0,u_aspect/1.8);
+      gl_Position = vec4(projected,0.0,1.0);
       v_depth = point.z;
       v_distance = s;
       v_highlight = pow(.5+.5*sin(s*12.566-u_time*.65+thread*1.9),8.0);
@@ -634,28 +651,22 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const fit=Math.min(1,width/height/1.15);
     const canvasWidth=width;
     function point(u,v,sheet) {
-      const drift=time*.18;
-      const spread=.27+.65*(1-u);
-      const x=-1+.90*u+.08*Math.sin(drift+u*2.2)+v*spread;
-      const y=(u-.5)*4.7+.20;
+      const x=-.68+.20*u+v*1.55;
+      const y=(u-.5)*5.2+.15;
       const px=x*2.35/5.1*fit;
       const py=y*2.35/5.1*fit+(1-fit)*.26;
       return [canvasWidth*.5+px*height*.5,height*.5-py*height*.5];
     }
-    fallback.save();
-    if (kind === 'beam') fallback.filter='blur(8px)';
-    if (kind === 'beam') for (let sheet=0;sheet<1;sheet++) {
-      fallback.beginPath();
-      for (let step=0;step<=100;step++) {
-        const u=step<=50?step/50:(100-step)/50;
-        const p=point(u,step<=50?-1:1,sheet);
-        if (step===0) fallback.moveTo(...p); else fallback.lineTo(...p);
-      }
-      fallback.closePath();
-      fallback.fillStyle='rgba(190,190,190,.07)';
-      fallback.fill();
+    if (kind === 'beam') {
+      const centerX=width*(.35+.09*Math.sin(time*.165));
+      const centerY=height*(.46+.03*Math.sin(time*.11));
+      const glow=fallback.createRadialGradient(centerX,centerY,0,centerX,centerY,height*.62);
+      glow.addColorStop(0,'rgba(184,184,184,'+(.12+.018*Math.sin(time*.21))+')');
+      glow.addColorStop(.55,'rgba(184,184,184,.055)');
+      glow.addColorStop(1,'rgba(184,184,184,0)');
+      fallback.fillStyle=glow;
+      fallback.fillRect(0,0,width,height);
     }
-    fallback.restore();
     fallback.lineWidth=.7;
     if (kind === 'threads') for (let thread=0;thread<3;thread++) {
       fallback.beginPath();
@@ -664,7 +675,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
         const phase=s*Math.PI*2+thread*1.9+time*.13;
         const x=(s-.5)*5.9;
         const y=.64+Math.sin(phase)*.48*Math.sin(s*Math.PI)+(s-.5)*(.55-thread*.5);
-        const px=width*.5+x*2.35/5.1*fit*height*.5;
+        const px=width*.5+x*2.35/5.1*fit*height*.5*Math.max(1,width/height/1.8);
         const py=height*.5-(y*2.35/5.1*fit+(1-fit)*.26)*height*.5;
         if (step===0) fallback.moveTo(px,py); else fallback.lineTo(px,py);
       }
