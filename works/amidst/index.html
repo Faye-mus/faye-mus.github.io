@@ -229,6 +229,52 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(max-width:580px){.piece-main{width:calc(100% - 32px);padding-top:25px;padding-bottom:52px}.piece-back{margin-bottom:30px}.piece-title{font-size:54px}.piece-year{font-size:16px}.piece-description{font-size:12px;margin-top:26px}.piece-player{margin-top:32px}.piece-page footer{width:calc(100% - 32px)}}
 
 @media(max-width:360px){.navigation{font-size:11px;gap:2px}.navigation a{padding-inline:8px}}
+
+.work-cover img.work-cover-natural{filter:none}
+.piece-player-audio{max-width:760px;display:flex;flex-direction:column;align-items:center}
+
+.piece-recording-photo{position:relative;width:min(440px,100%);margin:0 auto 26px}
+.piece-recording-photo img{display:block;width:100%;height:auto}
+.piece-recording-photo::after{content:"";position:absolute;inset:-1px;pointer-events:none;background:linear-gradient(90deg,var(--paper),transparent 5%,transparent 95%,var(--paper)),linear-gradient(0deg,var(--paper),transparent 7%,transparent 94%,var(--paper))}
+.piece-player-audio .work-audio{max-width:640px}
+.piece-audio-message{align-self:center;max-width:640px;width:100%;margin-top:14px;font:11px/1.7 var(--mono);color:var(--muted)}
+.piece-audio-message[hidden]{display:none}
+.piece-audio-retry{border:1px solid var(--line);background:none;padding:5px 12px;margin-top:8px;cursor:pointer}
+
+/* A readable small-text scale across the portfolio and work pages. */
+.navigation{font-size:16px}
+.site-head>.language{font-size:13px}
+.hero-copy .eyebrow{font-size:18px}
+.hero-copy .small-link{font-size:15px}
+.hero-copy .cn-name{font-size:18px}
+.intro,.work-body,.bio p,.piece-description{font-size:15px}
+.cn-name,.about-head .cn-name{font-size:14px}
+.section-label,.work-sub,.work-facts,.presentations p{font-size:13px}
+.work-year,.work-cover-meta{font-size:14px}
+.ink-controls,.hero-art figcaption,.hero-foot,footer{font-size:12px}
+.wave-divider figcaption,.wave-divider .ink-controls{font-size:12px}
+.wave-divider .ink-stage{inset-block-start:34px}
+.work-player-link,.piece-audio-message{font-size:13px}
+.piece-back{font-size:14px}
+.piece-year{font-size:20px}
+@media(max-width:580px){
+  .site-head{grid-template-columns:minmax(0,1fr) auto;gap:12px}
+  .navigation{grid-column:1;justify-self:start;font-size:14px;gap:4px}
+  .navigation a{padding:9px 8px}
+  .site-head>.language{grid-column:2;font-size:12px;gap:6px}
+  .hero-copy .eyebrow,.hero-copy .cn-name{font-size:14px}
+  .hero-copy .small-link{font-size:14px}
+  .intro,.work-body{font-size:14px}
+  .bio p,.piece-description{font-size:15px}
+  .work-sub,.section-label,.work-facts,.presentations p{font-size:13px}
+  .work-year,.work-cover-meta{font-size:14px}
+  .hero-art figcaption,.ink-controls,.hero-foot,footer{font-size:12px}
+  .wave-divider figcaption,.wave-divider .ink-controls{font-size:12px}
+  .wave-divider #ink-hint{display:none}
+  .piece-year{font-size:18px}
+}
+@media(max-width:360px){.navigation{font-size:14px;gap:2px}.navigation a{padding-inline:6px}.site-head{gap:8px}}
+@media(max-width:580px){.wave-divider figcaption{letter-spacing:.02em}}
 </style>
 </head>
 <body class="piece-page" id="top">
@@ -268,6 +314,36 @@ document.getElementById('lang-en').addEventListener('click', () => setLanguage('
 document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
 setLanguage(language);
 document.getElementById('year').textContent = new Date().getFullYear();
+
+const recording = document.querySelector('audio');
+if (recording) {
+  const sources = [...recording.querySelectorAll('source')].map(source => source.src);
+  const attempted = new Set();
+  const message = document.querySelector('.piece-audio-message');
+  function tryNextSource() {
+    if (recording.currentSrc) attempted.add(recording.currentSrc);
+    const next = sources.find(source => !attempted.has(source));
+    if (next) {
+      attempted.add(next);
+      recording.src = next;
+      recording.load();
+    } else message.hidden = false;
+  }
+  recording.addEventListener('error', tryNextSource);
+  for (const source of recording.querySelectorAll('source')) source.addEventListener('error', () => {
+    attempted.add(source.src);
+    if (sources.every(source => attempted.has(source))) message.hidden = false;
+  });
+  recording.addEventListener('loadedmetadata', () => {message.hidden = true;});
+  document.querySelector('.piece-audio-retry').addEventListener('click', () => {
+    message.hidden = true;
+    attempted.clear();
+    recording.src = sources[0];
+    attempted.add(sources[0]);
+    recording.load();
+    recording.play().catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
