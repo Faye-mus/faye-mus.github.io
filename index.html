@@ -118,7 +118,7 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(max-width:580px){.wave-divider{height:195px}}
 .wave-divider .ink-stage{inset:24px 0 36px}
 /* Reveal a little more of the figure with soft, organic edges. */
-.hero-portrait img{width:92%;height:100%;margin-inline:auto;object-fit:cover;object-position:56% 28%;mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 28%,#000b 57%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 28%,#000b 57%,transparent 96%)}
+.hero-portrait img{width:92%;height:100%;margin-inline:auto;object-fit:cover;object-position:56% 28%;mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 22%,rgba(0,0,0,.60) 50%,rgba(0,0,0,.18) 76%,transparent 95%);-webkit-mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 22%,rgba(0,0,0,.60) 50%,rgba(0,0,0,.18) 76%,transparent 95%)}
 @media(max-width:580px){.hero-portrait img{width:94%;object-position:56% 37%}}
 @media(min-width:581px){.hero-portrait{top:6px}}
 @media(max-width:580px){.hero-portrait{top:12px}}
@@ -133,6 +133,14 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 
 .navigation{grid-column:2;grid-row:1}
 .site-head>.language{grid-column:3;grid-row:1}
+
+/* Increase the type scale of the name group. */
+.hero-copy .eyebrow{font-size:11px}
+.hero-copy .cn-name{font-size:14px}
+.hero-copy .small-link{font-size:11px}
+@media(min-width:581px){.hero-copy h1{font-size:clamp(70px,7.65vw,100px)}}
+@media(min-width:581px) and (max-width:900px){.hero-copy h1{font-size:clamp(54px,7.65vw,70px)}}
+@media(max-width:580px){.hero-copy h1{font-size:clamp(47px,13.1vw,72px)}.hero-copy .eyebrow{font-size:9px}.hero-copy .cn-name{font-size:11px}.hero-copy .small-link{font-size:10px}}
 </style>
 </head>
 <body id="top">
