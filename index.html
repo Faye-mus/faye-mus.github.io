@@ -240,6 +240,41 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .piece-audio-message{align-self:center;max-width:640px;width:100%;margin-top:14px;font:11px/1.7 var(--mono);color:var(--muted)}
 .piece-audio-message[hidden]{display:none}
 .piece-audio-retry{border:1px solid var(--line);background:none;padding:5px 12px;margin-top:8px;cursor:pointer}
+
+/* A readable small-text scale across the portfolio and work pages. */
+.navigation{font-size:16px}
+.site-head>.language{font-size:13px}
+.hero-copy .eyebrow{font-size:18px}
+.hero-copy .small-link{font-size:15px}
+.hero-copy .cn-name{font-size:18px}
+.intro,.work-body,.bio p,.piece-description{font-size:15px}
+.cn-name,.about-head .cn-name{font-size:14px}
+.section-label,.work-sub,.work-facts,.presentations p{font-size:13px}
+.work-year,.work-cover-meta{font-size:14px}
+.ink-controls,.hero-art figcaption,.hero-foot,footer{font-size:12px}
+.wave-divider figcaption,.wave-divider .ink-controls{font-size:12px}
+.wave-divider .ink-stage{inset-block-start:34px}
+.work-player-link,.piece-audio-message{font-size:13px}
+.piece-back{font-size:14px}
+.piece-year{font-size:20px}
+@media(max-width:580px){
+  .site-head{grid-template-columns:minmax(0,1fr) auto;gap:12px}
+  .navigation{grid-column:1;justify-self:start;font-size:14px;gap:4px}
+  .navigation a{padding:9px 8px}
+  .site-head>.language{grid-column:2;font-size:12px;gap:6px}
+  .hero-copy .eyebrow,.hero-copy .cn-name{font-size:14px}
+  .hero-copy .small-link{font-size:14px}
+  .intro,.work-body{font-size:14px}
+  .bio p,.piece-description{font-size:15px}
+  .work-sub,.section-label,.work-facts,.presentations p{font-size:13px}
+  .work-year,.work-cover-meta{font-size:14px}
+  .hero-art figcaption,.ink-controls,.hero-foot,footer{font-size:12px}
+  .wave-divider figcaption,.wave-divider .ink-controls{font-size:12px}
+  .wave-divider #ink-hint{display:none}
+  .piece-year{font-size:18px}
+}
+@media(max-width:360px){.navigation{font-size:14px;gap:2px}.navigation a{padding-inline:6px}.site-head{gap:8px}}
+@media(max-width:580px){.wave-divider figcaption{letter-spacing:.02em}}
 </style>
 </head>
 <body id="top">
