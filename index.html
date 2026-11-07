@@ -93,7 +93,7 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .hero-copy .small-link{margin-top:24px}
 .hero-visuals{display:contents;pointer-events:none}
 .hero-portrait{position:absolute;right:-2%;top:-18px;width:54%;height:100%;min-width:0;min-height:0;pointer-events:none;mix-blend-mode:lighten}
-.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:grayscale(1) brightness(.92) contrast(1.1);opacity:.9;mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%)}
+.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:saturate(.55) brightness(.94) contrast(1.08);opacity:.82;mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%)}
 .hero-visuals .hero-art{position:absolute;inset:auto;left:0;bottom:16px;width:46%;height:118px;min-width:0;pointer-events:auto}
 .hero-visuals .hero-art figcaption{left:0;top:0;font-size:8px}
 .hero-visuals .ink-controls{right:0;top:-7px;font-size:8px;gap:15px}
@@ -101,8 +101,12 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .portrait-light-stage{position:absolute;inset:0;z-index:1;pointer-events:auto;touch-action:pan-y;cursor:grab;mix-blend-mode:screen;mask-image:radial-gradient(ellipse 60% 50% at 46% 50%,#000 32%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 46% 50%,#000 32%,transparent 96%);outline-offset:-6px}
 .portrait-light-stage:active{cursor:grabbing}.portrait-light-stage canvas{display:block;width:100%;height:100%;pointer-events:none}
 @media(min-width:581px) and (max-width:900px){.hero{min-height:600px}.hero-copy{width:51%}.hero-copy h1{font-size:clamp(49px,7.1vw,64px)}.hero-copy .intro{font-size:10px;max-width:285px}.hero-portrait{width:54%;right:-4%}.hero-visuals #ink-hint{display:none}}
-@media(max-width:580px){.hero{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);padding:12px 0 30px}.hero-copy{grid-column:1;grid-row:2;order:initial;width:100%;padding:0;margin-top:-24px}.hero-copy h1{font-size:clamp(43px,12.1vw,66px);margin:14px 0}.hero-copy .eyebrow{font-size:8px}.hero-copy .intro{font-size:10px;margin-top:19px;max-width:310px}.hero-copy .small-link{margin-top:21px}.hero-portrait{position:relative;grid-column:1;grid-row:1;inset:auto;width:100%;max-width:430px;height:350px;justify-self:center}.hero-visuals .hero-art{position:relative;grid-column:1;grid-row:3;inset:auto;width:100%;height:112px;margin-top:35px}.hero-visuals .ink-controls{gap:13px}.hero-portrait img{opacity:.92}}
+@media(max-width:580px){.hero{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);padding:12px 0 30px}.hero-copy{grid-column:1;grid-row:2;order:initial;width:100%;padding:0;margin-top:-24px}.hero-copy h1{font-size:clamp(43px,12.1vw,66px);margin:14px 0}.hero-copy .eyebrow{font-size:8px}.hero-copy .intro{font-size:10px;margin-top:19px;max-width:310px}.hero-copy .small-link{margin-top:21px}.hero-portrait{position:relative;grid-column:1;grid-row:1;inset:auto;width:100%;max-width:430px;height:350px;justify-self:center}.hero-visuals .hero-art{position:relative;grid-column:1;grid-row:3;inset:auto;width:100%;height:112px;margin-top:35px}.hero-visuals .ink-controls{gap:13px}.hero-portrait img{opacity:.85}}
 @media(max-width:360px){.hero-visuals #ink-hint{display:none}.hero-portrait{height:310px}}
+
+/* Give the flowing threads enough space to be the main motion. */
+@media(min-width:581px){.hero-copy{transform:translateY(-44px)}.hero-visuals .hero-art{width:48%;height:210px;bottom:14px}}
+@media(max-width:580px){.hero-visuals .hero-art{height:190px;margin-top:29px}}
 </style>
 </head>
 <body id="top">
@@ -304,7 +308,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   const stage = document.getElementById(stageId);
   let canvas = document.getElementById(canvasId);
   const textureImage = document.getElementById('ink-texture');
-  const pointer = {x:0, y:0, targetX:0, targetY:0, strength:0, targetStrength:0};
+  const pointer = {x:0, y:0, targetX:0, targetY:0, strength:0, targetStrength:0, inside:false};
   const count = kind === 'beam' ? (innerWidth < 600 ? 160 : 300) : 0;
   const seeds = new Float32Array(count * 4);
   let randomState = 17819;
@@ -380,6 +384,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     varying vec2 v_uv;
     varying float v_light;
     varying float v_phase;
+    varying float v_hover;
     ${flowSource}
     void main() {
       float u = a_position.x;
@@ -392,7 +397,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
       v_light = .5+.5*dot(normal,normalize(vec3(-.35,.7,1.0)));
       v_uv = vec2(u,v*.5+.5);
       v_phase = u_time*.3;
-      gl_Position = vec4(projectFlow(point),0.0,1.0);
+      vec2 projected = projectFlow(point);
+      vec2 hoverDelta = projected-u_pointer.xy;
+      hoverDelta.x *= u_aspect;
+      v_hover = exp(-dot(hoverDelta,hoverDelta)*3.8)*min(u_pointer.z,1.4);
+      gl_Position = vec4(projected,0.0,1.0);
     }
   `;
   const inkFragmentSource = `
@@ -401,6 +410,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     varying vec2 v_uv;
     varying float v_light;
     varying float v_phase;
+    varying float v_hover;
     float hash(vec2 p) {
       return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);
     }
@@ -417,7 +427,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
       vec2 drift = vec2(v_phase*.13,-v_phase*.18);
       float atmosphere = .77+.15*mist(v_uv*vec2(4.0,3.0)+drift)+.08*mist(v_uv*7.0-drift);
       float breathing = .86+.14*sin(v_phase*.7);
-      gl_FragColor = vec4(vec3(.72),ends*feather*atmosphere*breathing*.155);
+      float illumination = .13+.44*v_hover;
+      gl_FragColor = vec4(vec3(.68,.72,.76),ends*feather*atmosphere*breathing*illumination);
     }
   `;
 
@@ -434,15 +445,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
       float envelope = sin(s*3.14159265);
       vec3 point = vec3(
         (s-.5)*5.9,
-        .64+sin(phase)*.48*envelope+(s-.5)*(.55-thread*.5),
+        .14+sin(phase)*1.12*envelope+(s-.5)*(.70-thread*.65),
         cos(phase)*.72*envelope
       );
       vec2 projected = projectFlow(point);
       projected.x *= max(1.0,u_aspect/1.8);
+      vec2 pointerDelta = projected-u_pointer.xy;
+      pointerDelta.x *= u_aspect;
+      float nearby = exp(-dot(pointerDelta,pointerDelta)*4.0)*min(u_pointer.z,1.0);
+      projected.y += .09*sin(s*9.0+thread)*nearby;
       gl_Position = vec4(projected,0.0,1.0);
       v_depth = point.z;
       v_distance = s;
-      v_highlight = pow(.5+.5*sin(s*12.566-u_time*.65+thread*1.9),8.0);
+      v_highlight = max(nearby,pow(.5+.5*sin(s*12.566-u_time*.65+thread*1.9),8.0));
     }
   `;
   const lineFragmentSource = `
@@ -454,7 +469,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     void main() {
       float ends = pow(max(.0,sin(v_distance*3.14159265)),.5);
       float side = step(.0,v_depth*u_layer);
-      gl_FragColor = vec4(vec3(.64),(.25+.30*v_highlight)*ends*side);
+      gl_FragColor = vec4(vec3(.74),(.60+.28*v_highlight)*ends*side);
     }
   `;
 
@@ -666,6 +681,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
       glow.addColorStop(1,'rgba(184,184,184,0)');
       fallback.fillStyle=glow;
       fallback.fillRect(0,0,width,height);
+      if (pointer.strength>.001) {
+        const hoverX=(pointer.x+1)*width*.5, hoverY=(1-pointer.y)*height*.5;
+        const hover=fallback.createRadialGradient(hoverX,hoverY,0,hoverX,hoverY,height*.48);
+        hover.addColorStop(0,'rgba(173,184,194,'+Math.min(.34,pointer.strength*.26)+')');
+        hover.addColorStop(1,'rgba(173,184,194,0)');
+        fallback.fillStyle=hover;
+        fallback.fillRect(0,0,width,height);
+      }
     }
     fallback.lineWidth=.7;
     if (kind === 'threads') for (let thread=0;thread<3;thread++) {
@@ -674,12 +697,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
         const s=step/150;
         const phase=s*Math.PI*2+thread*1.9+time*.13;
         const x=(s-.5)*5.9;
-        const y=.64+Math.sin(phase)*.48*Math.sin(s*Math.PI)+(s-.5)*(.55-thread*.5);
+        const y=.14+Math.sin(phase)*1.12*Math.sin(s*Math.PI)+(s-.5)*(.70-thread*.65);
         const px=width*.5+x*2.35/5.1*fit*height*.5*Math.max(1,width/height/1.8);
         const py=height*.5-(y*2.35/5.1*fit+(1-fit)*.26)*height*.5;
         if (step===0) fallback.moveTo(px,py); else fallback.lineTo(px,py);
       }
-      fallback.strokeStyle='rgba(164,164,164,.3)';
+      fallback.strokeStyle='rgba(164,164,164,.55)';
       fallback.stroke();
     }
     fallback.fillStyle='rgba(179,179,179,.4)';
@@ -718,13 +741,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
     cancelAnimationFrame(frame);
     frame = 0;
     lastFrame = 0;
-    if (!paused && visible && !document.hidden) frame = requestAnimationFrame(animate);
+    if (paused) {
+      pointer.x=pointer.targetX;
+      pointer.y=pointer.targetY;
+      pointer.strength=pointer.targetStrength;
+      render();
+    } else if (visible && !document.hidden) frame = requestAnimationFrame(animate);
   }
   function updatePointer(event) {
     const bounds = stage.getBoundingClientRect();
     pointer.targetX = (event.clientX-bounds.left)/bounds.width*2-1;
     pointer.targetY = 1-(event.clientY-bounds.top)/bounds.height*2;
-    pointer.targetStrength = dragging ? 2.0 : 1.0;
+    pointer.inside = event.clientX>=bounds.left && event.clientX<=bounds.right && event.clientY>=bounds.top && event.clientY<=bounds.bottom;
+    pointer.targetStrength = dragging ? 1.4 : 1.0;
     if (paused) {
       pointer.x = pointer.targetX;
       pointer.y = pointer.targetY;
@@ -732,14 +761,16 @@ document.getElementById('year').textContent = new Date().getFullYear();
       render();
     }
   }
-  function releasePointer() {
+  function releasePointer(event) {
     dragging = false;
-    pointer.targetStrength = 0;
+    if (event?.pointerType === 'touch') pointer.inside = false;
+    pointer.targetStrength = pointer.inside && event?.type !== 'blur' && event?.type !== 'pointercancel' ? 1 : 0;
     if (paused) {
-      pointer.strength = 0;
+      pointer.strength = pointer.targetStrength;
       render();
     }
   }
+  stage.addEventListener('pointerenter',updatePointer);
   stage.addEventListener('pointermove',updatePointer);
   stage.addEventListener('pointerdown',event => {
     dragging = true;
@@ -750,7 +781,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   stage.addEventListener('pointerup',releasePointer);
   stage.addEventListener('pointercancel',releasePointer);
   stage.addEventListener('lostpointercapture',releasePointer);
-  stage.addEventListener('pointerleave',()=>{if (!dragging) releasePointer();});
+  stage.addEventListener('pointerleave',()=>{pointer.inside=false;if (!dragging) releasePointer();});
   stage.addEventListener('blur',releasePointer);
   stage.addEventListener('keydown',event=>{
     const directions = {ArrowLeft:[-.12,0],ArrowRight:[.12,0],ArrowUp:[0,.12],ArrowDown:[0,-.12]};
