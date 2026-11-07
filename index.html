@@ -95,8 +95,8 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .hero-visuals .ink-controls{right:0;top:15px;font-size:8px;gap:15px}
 .hero-visuals .ink-stage{inset:0}
 .hero-portrait{position:relative;grid-column:2;grid-row:1;width:100%;height:calc(100% + 100px);top:-22px;min-width:0;min-height:0;pointer-events:none;mix-blend-mode:lighten}
-.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:saturate(.55) brightness(.94) contrast(1.08);opacity:.87;mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 52% 50%,#000 25%,#000b 50%,transparent 96%)}
-.portrait-light-stage{position:absolute;inset:0;z-index:1;pointer-events:auto;touch-action:pan-y;cursor:grab;mix-blend-mode:screen;mask-image:linear-gradient(transparent,#000 13%,#000 78%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 13%,#000 78%,transparent);outline-offset:-6px}
+.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:56% 50%;filter:saturate(.55) brightness(.94) contrast(1.08);opacity:.87;}
+.portrait-light-stage{position:absolute;inset:0;z-index:1;pointer-events:auto;touch-action:pan-y;cursor:grab;mix-blend-mode:screen;outline-offset:-6px}
 .portrait-light-stage:active{cursor:grabbing}.portrait-light-stage canvas{display:block;width:100%;height:100%;pointer-events:none}
 @media(min-width:581px) and (max-width:900px){.hero{min-height:600px}.hero-visuals{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;bottom:245px}.hero-visuals #ink-hint{display:none}.hero-copy h1{font-size:clamp(62px,8.1vw,80px)}}
 @media(max-width:580px){.hero{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);padding:10px 0 38px}.hero-visuals{display:contents}.hero-portrait{grid-column:1;grid-row:1;position:relative;inset:auto;width:100%;max-width:450px;height:370px;justify-self:center}.hero-visuals .hero-art{grid-column:1;grid-row:2;position:relative;inset:auto;width:100%;height:190px;margin:8px 0 26px}.hero-visuals .hero-art figcaption{top:0}.hero-visuals .ink-controls{top:-7px;gap:13px}.hero-visuals .ink-stage{inset:24px 0 0}.hero-copy{grid-column:1;grid-row:3;width:100%;margin:0}.hero-copy h1{font-size:clamp(43px,12.1vw,66px);margin:14px 0}.hero-copy .small-link{margin-top:23px}.hero-portrait img{opacity:.89}}
@@ -118,7 +118,7 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(max-width:580px){.wave-divider{height:195px}}
 .wave-divider .ink-stage{inset:24px 0 36px}
 /* Reveal a little more of the figure with soft, organic edges. */
-.hero-portrait img{width:92%;height:100%;margin-inline:auto;object-fit:cover;object-position:56% 28%;mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 22%,rgba(0,0,0,.60) 50%,rgba(0,0,0,.18) 76%,transparent 95%);-webkit-mask-image:radial-gradient(ellipse 50% 53% at 50% 49%,#000 22%,rgba(0,0,0,.60) 50%,rgba(0,0,0,.18) 76%,transparent 95%)}
+.hero-portrait img{width:92%;height:100%;margin-inline:auto;object-fit:cover;object-position:56% 28%;}
 @media(max-width:580px){.hero-portrait img{width:94%;object-position:56% 37%}}
 @media(min-width:581px){.hero-portrait{top:6px}}
 @media(max-width:580px){.hero-portrait{top:12px}}
@@ -142,8 +142,7 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 @media(min-width:581px) and (max-width:900px){.hero-copy h1{font-size:clamp(54px,7.65vw,70px)}}
 @media(max-width:580px){.hero-copy h1{font-size:clamp(47px,13.1vw,72px)}.hero-copy .eyebrow{font-size:9px}.hero-copy .cn-name{font-size:11px}.hero-copy .small-link{font-size:10px}}
 
-/* A slightly larger portrait with an uneven, feathered ink-like edge. */
-.hero-portrait img{mask-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNjAwIDYwMCI+CiAgPGRlZnM+CiAgICA8ZmlsdGVyIGlkPSJlZGdlIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9Ii4wMTIgLjAxOCIgbnVtT2N0YXZlcz0iMiIgc2VlZD0iMjMiIHJlc3VsdD0ibm9pc2UiLz4KICAgICAgPGZlRGlzcGxhY2VtZW50TWFwIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9Im5vaXNlIiBzY2FsZT0iMzYiIHhDaGFubmVsU2VsZWN0b3I9IlIiIHlDaGFubmVsU2VsZWN0b3I9IkciLz4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMzIiLz4KICAgIDwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iY2VudGVyIiB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0NiIvPjwvZmlsdGVyPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmYWRlLXJpZ2h0IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0id2hpdGUiLz48c3RvcCBvZmZzZXQ9Ijk0JSIgc3RvcC1jb2xvcj0id2hpdGUiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PgogICAgPG1hc2sgaWQ9ImJvdW5kcyIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBmaWxsPSJ1cmwoI2ZhZGUtcmlnaHQpIi8+PC9tYXNrPgogIDwvZGVmcz4KICA8ZyBtYXNrPSJ1cmwoI2JvdW5kcykiPgogIDxwYXRoIGQ9Ik0yOTMgNDMgQzM1NyAxMiA0MzAgNjkgNDcwIDk1IEM1MjAgMTMwIDQ4NSAxNjcgNTA1IDIwNiBDNTQ4IDI1MiA1MTAgMjkwIDUzMCAzMzYgQzU1MCAzODggNDk1IDQwOSA0OTIgNDU3IEM0ODUgNDk5IDQwMCA1MDUgMzY1IDUzMyBDMzA4IDU2NSAyNjIgNTI2IDIzMiA1MzUgQzE4MSA1NDUgMTUzIDQ4NyAxNTYgNDQ3IEMxMTAgNDEwIDE0NCAzNjcgMTIzIDMyNiBDMTAxIDI4MCAxMzYgMjUxIDEyOCAyMTAgQzExOSAxNjYgMTY3IDE0MSAxNzQgMTA3IEMxODQgNjggMjQ0IDc2IDI5MyA0M1oiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIuODYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMSAwKSBzY2FsZSgxLjA3IDEpIiBmaWx0ZXI9InVybCgjZWRnZSkiLz4KICA8ZWxsaXBzZSBjeD0iMzIzIiBjeT0iMjgwIiByeD0iMTM1IiByeT0iMTY2IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI2NlbnRlcikiLz4KICA8L2c+Cjwvc3ZnPgo=");-webkit-mask-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNjAwIDYwMCI+CiAgPGRlZnM+CiAgICA8ZmlsdGVyIGlkPSJlZGdlIiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9Ii4wMTIgLjAxOCIgbnVtT2N0YXZlcz0iMiIgc2VlZD0iMjMiIHJlc3VsdD0ibm9pc2UiLz4KICAgICAgPGZlRGlzcGxhY2VtZW50TWFwIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9Im5vaXNlIiBzY2FsZT0iMzYiIHhDaGFubmVsU2VsZWN0b3I9IlIiIHlDaGFubmVsU2VsZWN0b3I9IkciLz4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMzIiLz4KICAgIDwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0iY2VudGVyIiB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0NiIvPjwvZmlsdGVyPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmYWRlLXJpZ2h0IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0id2hpdGUiLz48c3RvcCBvZmZzZXQ9Ijk0JSIgc3RvcC1jb2xvcj0id2hpdGUiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PgogICAgPG1hc2sgaWQ9ImJvdW5kcyIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBmaWxsPSJ1cmwoI2ZhZGUtcmlnaHQpIi8+PC9tYXNrPgogIDwvZGVmcz4KICA8ZyBtYXNrPSJ1cmwoI2JvdW5kcykiPgogIDxwYXRoIGQ9Ik0yOTMgNDMgQzM1NyAxMiA0MzAgNjkgNDcwIDk1IEM1MjAgMTMwIDQ4NSAxNjcgNTA1IDIwNiBDNTQ4IDI1MiA1MTAgMjkwIDUzMCAzMzYgQzU1MCAzODggNDk1IDQwOSA0OTIgNDU3IEM0ODUgNDk5IDQwMCA1MDUgMzY1IDUzMyBDMzA4IDU2NSAyNjIgNTI2IDIzMiA1MzUgQzE4MSA1NDUgMTUzIDQ4NyAxNTYgNDQ3IEMxMTAgNDEwIDE0NCAzNjcgMTIzIDMyNiBDMTAxIDI4MCAxMzYgMjUxIDEyOCAyMTAgQzExOSAxNjYgMTY3IDE0MSAxNzQgMTA3IEMxODQgNjggMjQ0IDc2IDI5MyA0M1oiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIuODYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMSAwKSBzY2FsZSgxLjA3IDEpIiBmaWx0ZXI9InVybCgjZWRnZSkiLz4KICA8ZWxsaXBzZSBjeD0iMzIzIiBjeT0iMjgwIiByeD0iMTM1IiByeT0iMTY2IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI2NlbnRlcikiLz4KICA8L2c+Cjwvc3ZnPgo=");mask-size:100% 100%;-webkit-mask-size:100% 100%;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat}
+/* Preserve the portrait scale and visible body range. */
 @media(min-width:581px){.hero-portrait{width:56.5%;height:105%;right:-3%;top:0}}
 @media(max-width:580px){.hero-portrait{height:386px}.hero-portrait img{width:98%}}
 @media(max-width:360px){.hero-portrait{height:355px}}
@@ -167,12 +166,16 @@ body.zh .intro{line-height:2;letter-spacing:.03em}body.zh h2,body.zh .work-title
 .wave-divider{margin-top:24px}
 @media(max-width:580px){.wave-divider{margin-top:18px}}
 
-/* Keep all four portrait edges feathered, even before the SVG mask decodes. */
-.hero-portrait{isolation:isolate;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent),linear-gradient(0deg,transparent,#000 12%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent),linear-gradient(0deg,transparent,#000 12%,#000 90%,transparent);mask-composite:intersect;-webkit-mask-composite:source-in;mask-size:100% 100%;-webkit-mask-size:100% 100%;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat}
+
 
 /* Give the interwoven sound-wave strands more vertical breathing room. */
 .wave-divider{height:270px}
 @media(max-width:580px){.wave-divider{height:225px}}
+
+/* Paint the page color over the photograph and light edges in one layer.
+   This does not depend on an asynchronously decoded SVG or CSS mask compositing. */
+.hero-portrait{isolation:isolate}
+.hero-portrait::after{content:"";position:absolute;inset:-2px;z-index:2;pointer-events:none;background:linear-gradient(90deg,var(--paper),transparent 13%,transparent 87%,var(--paper)),linear-gradient(0deg,var(--paper),transparent 13%,transparent 89%,var(--paper)),radial-gradient(ellipse 56% 64% at 54% 48%,transparent 25%,rgba(52,52,52,.25) 45%,rgba(52,52,52,.75) 64%,var(--paper) 86%)}
 </style>
 </head>
 <body id="top">
@@ -505,20 +508,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
     void main() {
       float s = a_position.x;
       float thread = a_position.y;
-      float family = floor(thread*2.999);
-      float strand = fract(thread*2.999);
-      float phase = s*6.2831853*(3.0+family*.85)-u_time*(.42+family*.10)+family*1.9+strand*.78;
-      float envelope = pow(sin(s*3.14159265),.85);
-      float packet = amplitudeNoise(s*6.0-u_time*.18+41.0+family*7.0+strand*.16);
-      float intensity = amplitudeNoise(u_time*.22+8.0+family*2.3);
-      float amplitude = (.20+1.55*packet)*(.65+.65*intensity)*(.32+.90*strand);
-      float wave = 1.85*amplitude*(sin(phase)+.22*sin(phase*1.7+family))*envelope;
-      wave = 2.15*wave/(1.0+abs(wave));
-      vec3 point = vec3(
-        (s-.5)*5.9,
-        .08+wave+(strand-.5)*.035*envelope,
-        cos(phase)*.20*envelope
-      );
+      float phase = s*6.2831853*58.0-u_time*1.4;
+      float envelope = pow(sin(s*3.14159265),.65);
+      float packet = amplitudeNoise(s*15.0-u_time*.24+41.0);
+      float intensity = amplitudeNoise(u_time*.28+8.0);
+      float amplitude = (.025+2.4*pow(packet,2.3))*(.80+.50*intensity)*envelope;
+      float wave = sin(phase)*amplitude;
+      wave = 2.05*wave/(.85+abs(wave));
+      vec3 point = vec3((s-.5)*5.9,.08+wave,0.0);
       vec2 projected = projectFlow(point);
       projected.x *= max(1.0,u_aspect/1.5);
       vec2 pointerDelta = projected-u_pointer.xy;
@@ -526,7 +523,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
       float nearby = exp(-dot(pointerDelta,pointerDelta)*4.0)*min(u_pointer.z,1.0);
       projected.y += .09*sin(s*9.0+thread)*nearby;
       gl_Position = vec4(projected,0.0,1.0);
-      v_depth = point.z;
+      v_depth = cos(phase)*.20;
       v_distance = s;
       v_highlight = max(nearby,pow(.5+.5*sin(s*12.566-u_time*.65+thread*1.9),8.0));
     }
@@ -540,7 +537,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     void main() {
       float ends = pow(max(.0,sin(v_distance*3.14159265)),.5);
       float side = step(.0,v_depth*u_layer);
-      gl_FragColor = vec4(vec3(.72),(.16+.24*v_highlight)*ends*side);
+      gl_FragColor = vec4(vec3(.72),(.52+.22*v_highlight)*ends*side);
     }
   `;
 
@@ -638,16 +635,16 @@ document.getElementById('year').textContent = new Date().getFullYear();
       gl.attachShader(lineProgram,shader(gl.FRAGMENT_SHADER,lineFragmentSource));
       gl.linkProgram(lineProgram);
       if (!gl.getProgramParameter(lineProgram,gl.LINK_STATUS)) throw new Error('Thread shader linking failed.');
-      const segments=560;
-      const threadCount=32;
+      const segments=1160;
+      const threadCount=1;
       const threads=new Float32Array(threadCount*segments*4);
       let position=0;
       for (let thread=0;thread<threadCount;thread++) {
         for (let segment=0;segment<segments;segment++) {
           threads[position++]=segment/segments;
-          threads[position++]=thread/(threadCount-1);
+          threads[position++]=0;
           threads[position++]=(segment+1)/segments;
-          threads[position++]=thread/(threadCount-1);
+          threads[position++]=0;
         }
       }
       lineBuffer=gl.createBuffer();
@@ -761,32 +758,29 @@ document.getElementById('year').textContent = new Date().getFullYear();
     }
     fallback.restore();
     fallback.lineWidth=.7;
-    if (kind === 'threads') for (let index=0;index<32;index++) {
-      const thread=index/31;
-      const family=Math.floor(thread*2.999);
-      const strand=(thread*2.999)%1;
+    if (kind === 'threads') {
+      const thread=0;
       fallback.beginPath();
-      for (let step=0;step<=320;step++) {
-        const s=step/320;
-        const phase=s*Math.PI*2*(3+family*.85)-time*(.42+family*.10)+family*1.9+strand*.78;
-        const envelope=Math.pow(Math.sin(s*Math.PI),.85);
-        const packet=amplitudeNoise(s*6-time*.18+41+family*7+strand*.16);
-        const intensity=amplitudeNoise(time*.22+8+family*2.3);
-        const amplitude=(.20+1.55*packet)*(.65+.65*intensity)*(.32+.90*strand);
-        const rawWave=1.85*amplitude*(Math.sin(phase)+.22*Math.sin(phase*1.7+family))*envelope;
-        const wave=2.15*rawWave/(1+Math.abs(rawWave));
+      for (let step=0;step<=1160;step++) {
+        const s=step/1160;
+        const phase=s*Math.PI*2*58-time*1.4;
+        const envelope=Math.pow(Math.sin(s*Math.PI),.65);
+        const packet=amplitudeNoise(s*15-time*.24+41);
+        const intensity=amplitudeNoise(time*.28+8);
+        const amplitude=(.025+2.4*Math.pow(packet,2.3))*(.80+.50*intensity)*envelope;
+        const rawWave=Math.sin(phase)*amplitude;
+        const wave=2.05*rawWave/(.85+Math.abs(rawWave));
         const x=(s-.5)*5.9;
-        const y=.08+wave+(strand-.5)*.035*envelope;
-        const z=Math.cos(phase)*.20*envelope;
-        let px=x*2.35/(5.1-z)/(width/height)*fit*Math.max(1,width/height/1.5);
-        let py=y*2.35/(5.1-z)*fit+(1-fit)*.26;
+        const y=.08+wave;
+        let px=x*2.35/5.1/(width/height)*fit*Math.max(1,width/height/1.5);
+        let py=y*2.35/5.1*fit+(1-fit)*.26;
         const dx=(px-pointer.x)*(width/height),dy=py-pointer.y;
         const nearby=Math.exp(-(dx*dx+dy*dy)*4)*Math.min(pointer.strength,1);
         py+=.09*Math.sin(s*9+thread)*nearby;
         const pixelX=width*(.5+px*.5),pixelY=height*(.5-py*.5);
         if (step===0) fallback.moveTo(pixelX,pixelY); else fallback.lineTo(pixelX,pixelY);
       }
-      fallback.strokeStyle='rgba(184,184,184,.27)';
+      fallback.strokeStyle='rgba(184,184,184,.65)';
       fallback.stroke();
     }
     fallback.fillStyle='rgba(179,179,179,.4)';
