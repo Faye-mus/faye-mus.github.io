@@ -537,7 +537,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     void main() {
       float ends = pow(max(.0,sin(v_distance*3.14159265)),.5);
       float side = step(.0,v_depth*u_layer);
-      gl_FragColor = vec4(vec3(.72),(.26+.16*v_highlight)*ends*side);
+      gl_FragColor = vec4(vec3(.72),(.34+.18*v_highlight)*ends*side);
     }
   `;
 
@@ -636,7 +636,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
       gl.linkProgram(lineProgram);
       if (!gl.getProgramParameter(lineProgram,gl.LINK_STATUS)) throw new Error('Thread shader linking failed.');
       const segments=1160;
-      const threadCount=5;
+      const threadCount=3;
       const threads=new Float32Array(threadCount*segments*4);
       let position=0;
       for (let thread=0;thread<threadCount;thread++) {
@@ -758,8 +758,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
     }
     fallback.restore();
     fallback.lineWidth=.7;
-    if (kind === 'threads') for (let index=0;index<5;index++) {
-      const thread=index/4;
+    if (kind === 'threads') for (let index=0;index<3;index++) {
+      const thread=index/2;
       fallback.beginPath();
       for (let step=0;step<=1160;step++) {
         const s=step/1160;
@@ -780,7 +780,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
         const pixelX=width*(.5+px*.5),pixelY=height*(.5-py*.5);
         if (step===0) fallback.moveTo(pixelX,pixelY); else fallback.lineTo(pixelX,pixelY);
       }
-      fallback.strokeStyle='rgba(184,184,184,.36)';
+      fallback.strokeStyle='rgba(184,184,184,.44)';
       fallback.stroke();
     }
     fallback.fillStyle='rgba(179,179,179,.4)';
